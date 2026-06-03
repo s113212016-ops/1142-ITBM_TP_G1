@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NVIDIA  Analysis - Group 1</title>
+    <title>NVIDIA Strategy Analysis - Group 1</title>
     
-    <!-- 載入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Tailwind 設定 (啟用 Dark Mode class 與擴充動畫) -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -18,10 +16,8 @@
         }
     </script>
 
-    <!-- 載入 Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- 自訂 CSS 特效 (故障藝術、掃描線、雷射邊框等) -->
     <style>
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes slide-right { 0% { background-position: 0 0; } 100% { background-position: 40px 0; } }
@@ -52,7 +48,6 @@
         .animate-scan-track { animation: scan-track 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
         .animate-gradient-x { animation: gradient-x 4s ease infinite; }
         
-        /* 隱藏捲軸 */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -61,7 +56,6 @@
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
 
-        /* 故障藝術特效 (Hover Glitch) */
         .glitch-hover:hover { position: relative; }
         .glitch-hover:hover::before {
             content: attr(data-text); position: absolute; left: -2px;
@@ -74,21 +68,22 @@
             background: transparent; color: currentColor; z-index: -1;
         }
         
-        /* 3D Transform Utilities */
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
         .translate-z-10 { transform: translateZ(10px); }
         .translate-z-30 { transform: translateZ(30px); }
         .translate-z-50 { transform: translateZ(50px); }
         
-        /* 動態進場初始隱藏狀態 */
         .reveal-hidden { opacity: 0; transform: translateY(4rem) scale(0.95); }
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
+        
+        /* FAQ Accordion Transitions */
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; }
+        .faq-content.open { max-height: 300px; padding-top: 0.75rem; padding-bottom: 0.75rem; }
     </style>
 </head>
 <body class="min-h-screen font-sans overflow-x-hidden transition-colors duration-700 bg-[#f8fafc] text-slate-800 selection:bg-[#76b900] selection:text-white dark:bg-[#020806] dark:text-slate-300 dark:selection:bg-[#a3e635] dark:selection:text-black">
 
-    <!-- 頂部動態跑馬燈 (Live Ticker) -->
     <div class="fixed top-0 left-0 w-full h-8 z-50 flex items-center overflow-hidden font-mono text-xs font-bold tracking-widest border-b bg-green-700 text-white border-green-800 dark:bg-[#a3e635] dark:text-black dark:border-black">
         <div class="whitespace-nowrap animate-[marquee_40s_linear_infinite] flex items-center">
             <span class="mx-6 flex items-center gap-2"><span class="w-2 h-2 rounded-full animate-pulse bg-green-300 dark:bg-black"></span> SYS.STATUS: ONLINE</span> |
@@ -110,14 +105,12 @@
         </div>
     </div>
 
-    <!-- 科技感背景層 -->
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden mt-8">
         <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(163,230,53,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(163,230,53,0.05)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_30%,#000_10%,transparent_100%)] animate-pan-grid opacity-0 dark:opacity-100"></div>
         <div class="absolute -top-[10%] -left-[10%] w-[60vw] h-[60vw] rounded-full blur-[150px] transition-colors duration-700 animate-float bg-green-300 opacity-20 dark:bg-[#76b900] dark:opacity-20"></div>
         <div class="absolute top-[40%] -right-[10%] w-[50vw] h-[50vw] rounded-full blur-[160px] transition-colors duration-700 animate-float-delayed bg-blue-200 opacity-10 dark:bg-[#06b6d4]"></div>
     </div>
 
-    <!-- 頂部導覽列 Navbar -->
     <nav class="fixed top-8 w-full z-40 backdrop-blur-xl border-b transition-colors duration-500 bg-white/70 border-slate-200 dark:bg-[#020806]/70 dark:border-white/5">
         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#76b900] to-transparent opacity-50"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,7 +142,6 @@
         </div>
     </nav>
 
-    <!-- 側邊導覽目錄 (Sidebar) -->
     <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6 w-48">
         <div class="text-[10px] font-mono tracking-widest uppercase mb-2 flex items-center gap-2 text-green-600 dark:text-[#a3e635] dark:drop-shadow-[0_0_5px_rgba(163,230,53,0.5)]">
             <i data-lucide="network" class="w-3 h-3 animate-pulse"></i> TARGET_LOCK
@@ -160,38 +152,30 @@
         </div>
     </div>
 
-    <!-- AI 聊天機器人 (Chatbot UI) -->
     <div class="fixed bottom-6 left-6 z-50 hidden md:flex flex-col items-start gap-4">
-        <div id="chat-window" class="hidden w-80 h-96 rounded-2xl flex-col overflow-hidden border shadow-2xl backdrop-blur-xl bg-white/90 border-green-300 dark:bg-[#020806]/90 dark:border-[#a3e635]/30">
-            <!-- Chat Header -->
-            <div class="p-3 border-b flex items-center justify-between bg-green-100 border-green-200 text-green-800 dark:bg-[#a3e635]/10 dark:border-[#a3e635]/30 dark:text-[#a3e635]">
-                <div class="flex items-center gap-2 font-mono text-xs font-bold tracking-widest"><i data-lucide="bot" class="w-4 h-4"></i> <span data-i18n="chatbot.title"></span></div>
-                <button onclick="toggleChat()" class="hover:opacity-70"><i data-lucide="x" class="w-4 h-4"></i></button>
+        <!-- FAQ Modal -->
+        <div id="faq-window" class="hidden w-80 lg:w-96 max-h-[30rem] rounded-2xl flex-col overflow-hidden border shadow-2xl backdrop-blur-xl bg-white/95 border-slate-300 dark:bg-[#020806]/95 dark:border-[#a3e635]/30 flex">
+            <!-- FAQ Header -->
+            <div class="p-3 border-b flex items-center justify-between bg-slate-100 border-slate-200 text-slate-800 dark:bg-[#a3e635]/10 dark:border-[#a3e635]/30 dark:text-[#a3e635]">
+                <div class="flex items-center gap-2 font-mono text-xs font-bold tracking-widest">
+                    <i data-lucide="help-circle" class="w-4 h-4"></i> <span data-i18n="faq.title"></span>
+                </div>
+                <button onclick="toggleFaqModal()" class="hover:opacity-70 transition-opacity"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <!-- Chat Body -->
-            <div id="chat-body" class="flex-1 p-4 overflow-y-auto space-y-4 text-sm font-medium flex flex-col">
-                <!-- 訊息注入區 -->
-            </div>
-            <!-- Quick Prompts -->
-            <div class="p-2 flex gap-2 overflow-x-auto border-t scrollbar-hide border-slate-100 dark:border-slate-800">
-                <button onclick="sendChatMessage(getI18n('chatbot.q1'))" class="shrink-0 px-2 py-1 text-[10px] font-mono rounded border whitespace-nowrap transition-colors border-slate-300 hover:border-green-600 dark:border-slate-600 dark:text-slate-300 dark:hover:border-[#a3e635] dark:hover:text-[#a3e635]" data-i18n="chatbot.q1"></button>
-                <button onclick="sendChatMessage(getI18n('chatbot.q2'))" class="shrink-0 px-2 py-1 text-[10px] font-mono rounded border whitespace-nowrap transition-colors border-slate-300 hover:border-green-600 dark:border-slate-600 dark:text-slate-300 dark:hover:border-[#a3e635] dark:hover:text-[#a3e635]" data-i18n="chatbot.q2"></button>
-                <button onclick="sendChatMessage(getI18n('chatbot.q3'))" class="shrink-0 px-2 py-1 text-[10px] font-mono rounded border whitespace-nowrap transition-colors border-slate-300 hover:border-green-600 dark:border-slate-600 dark:text-slate-300 dark:hover:border-[#a3e635] dark:hover:text-[#a3e635]" data-i18n="chatbot.q3"></button>
-            </div>
-            <!-- Input Field -->
-            <div class="p-2 border-t flex items-center bg-slate-50 border-slate-200 dark:bg-[#0f172a] dark:border-slate-700">
-                <input id="chat-input" type="text" placeholder="" class="flex-1 bg-transparent border-none outline-none text-xs px-2 text-slate-800 dark:text-white" onkeydown="if(event.key==='Enter') sendChatMessage(this.value)">
-                <button onclick="sendChatMessage(document.getElementById('chat-input').value)" class="p-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700 dark:bg-[#a3e635] dark:text-black dark:hover:opacity-80"><i data-lucide="send" class="w-3.5 h-3.5"></i></button>
+            <!-- FAQ Body (Accordion) -->
+            <div class="flex-1 overflow-y-auto p-2 scrollbar-hide space-y-2 relative">
+                <div class="sticky top-0 bg-white/90 dark:bg-[#020806]/90 backdrop-blur-sm z-10 px-2 pb-2 text-[10px] font-mono opacity-60 uppercase border-b border-slate-200 dark:border-slate-800 mb-2" data-i18n="faq.desc"></div>
+                <!-- Accordion Items Injected via JS -->
+                <div id="faq-accordion-container" class="px-2 space-y-2 pb-4"></div>
             </div>
         </div>
-        <!-- Toggle Button -->
-        <button onclick="toggleChat()" class="p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:-translate-y-1 relative group bg-green-600 text-white shadow-green-600/30 dark:bg-[#a3e635] dark:text-black dark:shadow-[0_0_20px_rgba(163,230,53,0.4)]">
+        <!-- FAQ Toggle Button -->
+        <button onclick="toggleFaqModal()" class="p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:-translate-y-1 relative group bg-slate-800 text-white hover:bg-slate-700 shadow-slate-500/30 dark:bg-[#a3e635] dark:text-black dark:shadow-[0_0_20px_rgba(163,230,53,0.4)] dark:hover:bg-[#86efac]">
             <div class="absolute inset-0 rounded-full animate-ping opacity-20 bg-current pointer-events-none"></div>
-            <i data-lucide="message-square" class="w-6 h-6"></i>
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
         </button>
     </div>
 
-    <!-- 右下角控制台 (Controls) -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
         <button id="stop-audio-btn" onclick="stopAudio()" class="hidden p-3 bg-rose-500 text-white rounded-xl shadow-[0_0_20px_rgba(244,63,94,0.5)] hover:bg-rose-400 flex items-center justify-center animate-pulse border border-rose-300">
             <i data-lucide="stop-circle" class="w-5 h-5"></i>
@@ -205,14 +189,13 @@
         </button>
     </div>
 
-    <!-- 主要內容區 -->
     <main class="pt-28 pb-32 relative z-10 lg:pl-56">
         
         <!-- Hero Section -->
         <section id="home" class="relative min-h-[90vh] flex items-center justify-center lg:justify-start px-4 max-w-7xl mx-auto pt-10 pb-20 scroll-mt-32">
             <div class="relative z-10 w-full grid grid-cols-1 xl:grid-cols-12 gap-12 items-center">
-                <!-- 左側：標題 -->
-                <div class="xl:col-span-5 text-center xl:text-left">
+                <!-- 左側：標題與企業簡介 -->
+                <div class="xl:col-span-5 text-center xl:text-left flex flex-col justify-center">
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out" style="transition-delay: 0ms">
                         <div class="flex justify-center xl:justify-start mb-8">
                             <div class="flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold tracking-widest border backdrop-blur-md border-[#76b900]/50 bg-green-50 text-green-700 dark:border-[#a3e635]/40 dark:bg-[#76b900]/10 dark:text-[#a3e635] dark:shadow-[0_0_15px_rgba(163,230,53,0.2)]">
@@ -225,7 +208,40 @@
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#76b900] via-[#a3e635] to-[#00ff9d] bg-[length:200%_auto] animate-gradient-x inline-block mt-2 pb-2 drop-shadow-[0_0_20px_rgba(163,230,53,0.3)] glitch-hover" id="glitch-title" data-text="" data-i18n="hero.title2"></span>
                         </h1>
                         
-                        <p class="text-lg mb-10 max-w-xl mx-auto xl:mx-0 leading-relaxed font-medium text-slate-600 dark:text-slate-400" data-i18n="hero.desc"></p>
+                        <!-- 企業核心檔案 (Cyberpunk Profile Card) -->
+                        <div class="mb-10 text-left relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#00ff9d]/20 border-l-4 border-l-[#00ff9d] max-w-xl mx-auto xl:mx-0">
+                            <!-- Glow -->
+                            <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                                <div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#00ff9d_50%,transparent_100%)]"></div>
+                            </div>
+                            <div class="relative z-10 h-full backdrop-blur-xl p-5 md:p-6 rounded-[23px] transition-colors duration-500 border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300 flex flex-col sm:flex-row gap-5 items-center">
+                                <div class="shrink-0 relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-2xl bg-emerald-50 dark:bg-black/50 border border-emerald-200 dark:border-slate-700/50 group-hover:border-[#00ff9d]/50 transition-colors overflow-hidden">
+                                    <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,255,157,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:10px_10px]"></div>
+                                    <i data-lucide="fingerprint" class="w-8 h-8 text-emerald-600 dark:text-[#00ff9d] drop-shadow-[0_0_8px_rgba(0,255,157,0.5)] z-10"></i>
+                                    <div class="absolute bottom-1 right-1 text-[7px] font-mono text-emerald-700 dark:text-[#00ff9d] opacity-70">ID:NVDA</div>
+                                </div>
+                                <div class="flex-1 w-full">
+                                    <div class="text-[10px] font-mono tracking-widest mb-1.5 text-emerald-600 dark:text-[#00ff9d] flex items-center gap-2 uppercase">
+                                        <i data-lucide="database" class="w-3 h-3"></i> <span data-i18n="profile.title"></span>
+                                    </div>
+                                    <p class="text-xs sm:text-sm font-medium leading-relaxed mb-3 text-slate-600 dark:text-slate-300" data-i18n="profile.desc"></p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/50">
+                                        <div>
+                                            <div class="text-[8px] font-mono text-slate-400 dark:text-slate-500 uppercase mb-0.5" data-i18n="profile.founded"></div>
+                                            <div class="text-xs font-bold text-slate-800 dark:text-white" data-i18n="profile.foundedVal"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[8px] font-mono text-slate-400 dark:text-slate-500 uppercase mb-0.5" data-i18n="profile.model"></div>
+                                            <div class="text-xs font-bold text-emerald-600 dark:text-[#00ff9d]" data-i18n="profile.modelVal"></div>
+                                        </div>
+                                        <div class="sm:col-span-2">
+                                            <div class="text-[8px] font-mono text-slate-400 dark:text-slate-500 uppercase mb-0.5" data-i18n="profile.founders"></div>
+                                            <div class="text-xs font-bold text-slate-800 dark:text-white" data-i18n="profile.foundersVal"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="flex flex-col sm:flex-row gap-4 justify-center xl:justify-start flex-wrap">
                             <button onclick="scrollToSection('macro')" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#76b900] to-[#10b981] text-[#020806] font-bold tracking-widest transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(118,185,0,0.5)] flex items-center justify-center gap-3 relative overflow-hidden group" style="will-change: transform">
@@ -242,11 +258,10 @@
                     </div>
                 </div>
 
-                <!-- 右側：Dashboard -->
+                <!-- 右側：Executive Summary -->
                 <div class="xl:col-span-7 mt-8 xl:mt-0">
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out" style="transition-delay: 200ms">
                         <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20 border-t-4 border-t-[#a3e635]">
-                            <!-- Glow -->
                             <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                                 <div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#a3e635_50%,transparent_100%)]"></div>
                             </div>
@@ -324,13 +339,10 @@
             
             <div id="modal-video-container" class="aspect-video bg-black rounded-xl border border-slate-700 relative overflow-hidden group cursor-pointer" onclick="playModalVideo()">
                 <div class="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(163,230,53,0.2)_50%,transparent_100%)] animate-[scanline_3s_linear_infinite] pointer-events-none z-10"></div>
-                <!-- 影片封面 -->
                 <img id="modal-cover-image" src="" alt="Video Cover" class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 group-hover:opacity-70">
-                <!-- 播放按鈕圖示 -->
                 <div class="absolute inset-0 flex items-center justify-center z-10">
                     <i data-lucide="play-circle" class="w-16 h-16 text-white/80 group-hover:text-[#a3e635] group-hover:scale-110 transition-all drop-shadow-lg"></i>
                 </div>
-                <!-- 實際的影片 iframe 將會透過 JS 動態注入覆蓋這裡 -->
                 <div id="modal-iframe-wrapper" class="absolute inset-0 z-20 hidden">
                     <iframe id="modal-iframe" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
@@ -343,9 +355,7 @@
         </div>
     </div>
 
-    <!-- JavaScript 核心邏輯 -->
     <script>
-        // === 方案 B: 互動式發光卡片網格 (Cyber-Grid Cards) ===
         const glossaryData = {
             "AI Infrastructure / Factories": { en: "Scalable, high-performance computing systems and revenue-generating facilities designed to convert raw energy into digital intelligence and tokens.", zh: "具備高擴展性的高效能運算系統與能創造營收的設施，旨在將原始能源轉化為數位智慧與 Token。" },
             "AI Training": { en: "The computational workload focused on initially teaching and building machine learning models.", zh: "專注於初步教導與建立機器學習模型的運算工作負載。" },
@@ -366,12 +376,12 @@
             "Vera Rubin Architecture": { en: "NVIDIA's next-generation computing platform slated for late 2026, specifically engineered to lower power consumption and slash AI inference costs tenfold.", zh: "Vera Rubin 架構：NVIDIA 預計於 2026 年底推出的下一代運算平台，專為降低功耗與將 AI 推論成本大幅削減十倍而設計。" }
         };
 
-        // === 資料字典 ===
         const dict = {
             en: {
+                profile: { title: "Corporate Profile", founded: "Founded / HQ", foundedVal: "1993 / Santa Clara, CA", founders: "Co-Founders", foundersVal: "Jensen Huang, C. Malachowsky, C. Priem", model: "Business Model", modelVal: "Fabless / The Engine of AI", desc: "NVIDIA Corporation was founded with the initial vision of bringing 3D graphics to the gaming and multimedia markets. Operating as a fabless semiconductor company, it has evolved into the global leader in AI and high-performance computing, widely recognized as 'The Engine of AI'." },
                 nav: { summary: "Summary", pestel: "PESTEL", opp: "Opportunity", ind: "Industry", firm: "Firm", conclusion: "Conclusion", appx: "Appendices", team: "Roster" },
-                hero: { tag: "ITBM-EMI TP G1", title1: "FUELING THE", title2: "AI REVOLUTION", desc: "An in-depth analysis of NVIDIA: Strategic positioning, market dominance, and the future of accelerated computing.", startBtn: "INITIATE ANALYSIS", teamBtn: "ACCESS GROUP 1", officialBtn: "VISIT NVIDIA OFFICIAL" },
-                summary: { step: "01", title: "Executive Summary", content: "In fiscal 2026, NVIDIA solidified its role as the foundational architect of global AI infrastructure, generating a record $215.9 billion in revenue and commanding 85% to 95% of the AI GPU market. However, severe geopolitical and macroeconomic vulnerabilities challenge this hyper-growth.", core: "Core Competence", coreDesc: "Proprietary CUDA software ecosystem and hardware superiority (Blackwell/Rubin architectures).", pos: "Market Position", posDesc: "Undisputed leader in Data Center AI GPU market with exceptional gross margins exceeding 75%.", chal: "Key Challenge", chalDesc: "Navigating U.S.-China tech decoupling, CapEx ROI scrutiny, and reliance on TSMC.", audio: "Executive Summary. In fiscal 2026, NVIDIA solidified its role as the foundational architect of global AI infrastructure, generating a record 215.9 billion dollars in revenue and commanding 85 to 95 percent of the AI GPU market. However, severe geopolitical and macroeconomic vulnerabilities challenge this hyper-growth. Core Competence: Proprietary CUDA software ecosystem and hardware superiority. Market Position: Undisputed leader in Data Center AI GPU market with exceptional gross margins exceeding 75 percent. Key Challenge: Navigating U.S.-China tech decoupling, CapEx ROI scrutiny, and reliance on TSMC." },
+                hero: { tag: "ITBM-EMI TP G1", title1: "ARCHITECTING THE", title2: "AI REVOLUTION", desc: "An in-depth analysis of NVIDIA: Strategic positioning, market dominance, and the future of accelerated computing.", startBtn: "INITIATE ANALYSIS", teamBtn: "ACCESS GROUP 1", officialBtn: "VISIT NVIDIA OFFICIAL" },
+                summary: { step: "01", title: "Executive Summary", content: "This project presents a comprehensive strategic analysis of NVIDIA's operations in Fiscal Year 2026. Utilizing frameworks such as PESTEL, Business Model Canvas, and Industry Life Cycle, we evaluate how NVIDIA maintains its 85%-95% market share in the AI GPU sector. The analysis highlights NVIDIA's transition from AI training to inference, its proprietary CUDA ecosystem moat, and the critical macroeconomic risks it faces.", core: "Methodology", coreDesc: "Strategic frameworks including PESTEL, BMC, and Supply Chain analysis.", pos: "Key Findings", posDesc: "Structural pivot to AI inference and Sovereign AI hyper-growth.", chal: "Critical Risks", chalDesc: "Geopolitical decoupling and extreme reliance on TSMC manufacturing.", audio: "Executive Summary. This project presents a comprehensive strategic analysis of NVIDIA's operations in Fiscal Year 2026. Utilizing frameworks such as PESTEL, Business Model Canvas, and Industry Life Cycle, we evaluate how NVIDIA maintains its 85 to 95 percent market share in the AI GPU sector. The analysis highlights NVIDIA's transition from AI training to inference, its proprietary CUDA ecosystem moat, and the critical macroeconomic risks it faces, particularly U.S.-China export controls and reliance on TSMC." },
                 pestel: { step: "02", title: "Macro Environment", 
                     tech: "Technological: Shift to Inference", techDesc: "The industry is pivoting from training AI models to running them (inference). NVIDIA must adapt its GPU architectures (Blackwell/Rubin) to focus on power efficiency and cost-per-query as energy demands hit physical limits.", 
                     pol: "Political: US-China Geopolitics", polDesc: "As of May 2026, US export restrictions on advanced AI chips to China create substantial revenue-at-risk scenarios. Balancing U.S. compliance while preserving Chinese revenue remains a top-tier operational challenge.", 
@@ -392,26 +402,28 @@
                     rs: { title: "Revenue Streams", items: ["Hardware Sales (Data Center, Gaming, Pro Viz, Auto)", "Software Licensing & Subscriptions (NVIDIA AI Enterprise)", "Cloud services and specialized support contracts"] }
                 },
                 ind: { step: "04", title: "Industry Analysis", 
-                    supply: "Supply Chain Structure", design: "Fabless: Architecture & CUDA", mfg: "Foundry: TSMC 3nm/4nm & CoWoS", mem: "Memory: SK Hynix/Micron HBM3e", asm: "Systems: GB200 NVL72 Racks", 
-                    coop: "Co-opetition", coopDesc: "NVIDIA navigates a delicate 'Frenemy' dynamic. Hyperscalers are its largest customers but also its most potent future competitors.", comp: "Strategic Ecosystem: Deeply bound to TSMC for advanced nodes and packaging, and highly dependent on Foxconn/Quanta to assemble massive, liquid-cooled server racks.", asic: "The Anti-NVIDIA Alliance: CSPs are heavily investing in custom ASICs (Google TPU, AWS Trainium, MSFT Maia) and forming open-source alliances like UALink to break the CUDA monopoly.", 
-                    life: "Industry Life Cycle", lifeDesc: "Driven by unprecedented CapEx spending, the industry is in a hyper-Growth phase. To prevent commoditization, NVIDIA enforces an aggressive one-year R&D cycle (Hopper ➔ Blackwell ➔ Rubin), forcing constant Renewal.", intro: "R&D", growth: "Mfg Ramp", mat: "Growth", dec: "Renewal", audio: "Industry Analysis. Supply Chain Structure: NVIDIA focuses on Fabless Design, relying on TSMC for CoWoS manufacturing, SK Hynix for HBM, and Foxconn for assembly. Co-opetition: NVIDIA leverages critical partnerships while guarding against in-house silicon threats from CSPs who are forming anti-NVIDIA alliances. Industry Life Cycle: Driven by massive CapEx, the market is in hyper-growth, with NVIDIA forcing a one-year renewal cycle to maintain dominance." },
+                    overview: "Full-Stack Computing Platform", overviewDesc: "NVIDIA operates in the semiconductor and AI infrastructure industry, evolving from a GPU company into a full-stack computing platform provider combining chips, systems, networking, software, and developer tools to raise barriers to entry.",
+                    supply: "Supply Chain Structure", design: "Fabless: Architecture & CUDA", mfg: "Foundry: TSMC 3nm/4nm & CoWoS", mem: "Packaging & Test: Amkor / SPIL", asm: "Systems: Foxconn / Wistron", 
+                    coop: "Co-opetition", coopDesc: "NVIDIA navigates a delicate mix of competition and cooperation, as no company can control the entire AI ecosystem alone.", coop1: "TSMC: Competes for leading-edge capacity, but cooperates closely to produce advanced chips.", coop2: "Foxconn & Wistron: Manufacturing partners for systems, but may support competing electronics.", coop3: "Cloud Providers (CSPs): Major customers for AI infrastructure, yet developing their own custom AI chips.", coop4: "Software Partners: Build on CUDA, but some may support competing open-source hardware ecosystems.",
+                    life: "Industry Life Cycle", lifeDesc: "Unlike traditional industries that inevitably face a 'Decline' phase, NVIDIA circumvents commoditization through an aggressive one-year architecture cycle (Hopper ➔ Blackwell ➔ Rubin). This creates a 'Forced Renewal' flywheel, locking hyperscalers into continuous upgrades.", intro: "R&D / DESIGN", growth: "MFG RAMP", mat: "HYPER GROWTH", dec: "FORCED RENEWAL", loopDesc: "NVIDIA avoids the Decline phase through a hyper-aggressive 1-year product cycle, forcing the market into constant Renewal.", audio: "Industry Analysis. Supply Chain Structure: NVIDIA focuses on Fabless Design, relying on TSMC for CoWoS manufacturing, SK Hynix for HBM, and Foxconn for assembly. Co-opetition: NVIDIA leverages critical partnerships while guarding against in-house silicon threats from CSPs who are forming anti-NVIDIA alliances. Industry Life Cycle: Driven by massive CapEx, the market is in hyper-growth, with NVIDIA forcing a one-year renewal cycle to maintain dominance." },
                 firm: { step: "05", title: "Firm Analysis", 
-                    fin: "Financial Performance (FY2026)", rev: "Total Revenue", revDesc: "Up 65% YoY. Data Center reached $194B (up 68% YoY) driven by Blackwell AI factory deployments.", margin: "Operating Income", marginDesc: "$130.4B (+60% YoY). Reflects massive global infrastructure buildout.", netw: "Networking", netwDesc: "Exceeded $31B, bolstered by the ramp of NVLink compute fabric, Ethernet & InfiniBand.", sov: "Sovereign AI", sovDesc: "More than tripled, exceeding $30B as nations invest in domestic AI infrastructure.", eps: "EPS & Returns", epsDesc: "Diluted EPS increased 67% to $4.90. Generated $103B operating cash flow and returned $41B to shareholders.", inf: "Inference Shift", infDesc: "Inference overtook training as the dominant workload, driving sustained demand for high-performance GPU compute.", 
-                    mgmt: "Management Team", mgmtDesc: "Led by visionary Founder & CEO Jensen Huang, NVIDIA's leadership seamlessly integrates hardware and software innovation. Key executives include Colette Kress (CFO) driving financial strategy, Jay Puri (Worldwide Field Operations) expanding global market penetration, Debora Shoquist (Operations) managing the complex TSMC-reliant supply chain, and Tim Teter (General Counsel). Their unified strategy effectively navigates hyperscaler demands, export controls, and the rapid deployment of the Blackwell architecture.",
-                    outlook: "Future Outlook (FY2027)", outlookDesc: "FY27 Rev projected at $323.3B-$343.4B (Margins >75%). Strategic pillars: (1) Flawlessly execute the Blackwell ramp. (2) Defend 85-95% market share against CSP ASICs. (3) Expand recurring software revenue. (4) Rollout Vera Rubin architecture in late 2026.", audio: "Firm Analysis. Financial Performance for Fiscal Year 2026. Total Revenue 215.9 Billion dollars, up 65% year over year. Data Center Revenue 194 Billion dollars, up 68% year over year. Operating Income 130.4 Billion dollars. Networking revenue exceeded 31 Billion dollars, bolstered by NVLink and InfiniBand. Sovereign AI business more than tripled, exceeding 30 Billion dollars as nations invest in their own infrastructure. Diluted Earnings per share increased 67 percent to 4 dollars and 90 cents. The company generated 103 billion in operating cash flow and returned 41 billion to shareholders. Operationally, inference overtook training as the dominant workload. Management Team: Founders Jensen Huang and Chris Malachowsky. Officers include Colette Kress, Jay Puri, Debora Shoquist, and Tim Teter. Future Outlook for Fiscal Year 2027: Projected Revenue 323.3 Billion to 343.4 Billion dollars. Strategic pillars include executing the Blackwell ramp, defending market share against ASICs, expanding software revenue, and rolling out the Vera Rubin architecture." },
+                    fin: "Financial Performance (FY2026)", rev: "Total Revenue", revDesc: "Up 65% YoY. Driven by Blackwell AI factory deployments.", margin: "Operating Income", marginDesc: "+60% YoY. Reflects massive global infrastructure buildout.", netw: "Networking", netwDesc: "Bolstered by the ramp of NVLink compute fabric & InfiniBand.", sov: "Sovereign AI", sovDesc: "More than tripled, as nations invest in domestic AI infra.", eps: "Diluted EPS", epsDesc: "Increased 67%. Generated $103B operating cash flow.", inf: "Inference Shift", infDesc: "Inference overtook training as the dominant workload.", 
+                    mgmt: "Management Team", mgmtDesc: "Led by visionary Founder & CEO Jensen Huang, NVIDIA's leadership seamlessly integrates hardware and software innovation. Key executives include Colette Kress (CFO), Jay Puri (Worldwide Field Ops), Debora Shoquist (Operations), and Tim Teter (General Counsel).",
+                    outlook: "Future Outlook (FY2027)", outlookDesc: "Projected Revenue Target (FY27)", pillar1: "Execute the Blackwell ramp flawlessly.", pillar2: "Defend 85-95% market share against ASIC threats.", pillar3: "Rollout Vera Rubin architecture to slash inference costs.", audio: "Firm Analysis. Financial Performance for Fiscal Year 2026. Total Revenue 215.9 Billion dollars, up 65% year over year. Data Center Revenue 194 Billion dollars, up 68% year over year. Operating Income 130.4 Billion dollars. Networking revenue exceeded 31 Billion dollars, bolstered by NVLink and InfiniBand. Sovereign AI business more than tripled, exceeding 30 Billion dollars as nations invest in their own infrastructure. Diluted Earnings per share increased 67 percent to 4 dollars and 90 cents. The company generated 103 billion in operating cash flow and returned 41 billion to shareholders. Operationally, inference overtook training as the dominant workload. Management Team: Founders Jensen Huang and Chris Malachowsky. Officers include Colette Kress, Jay Puri, Debora Shoquist, and Tim Teter. Future Outlook for Fiscal Year 2027: Projected Revenue 323.3 Billion to 343.4 Billion dollars. Strategic pillars include executing the Blackwell ramp, defending market share against ASICs, expanding software revenue, and rolling out the Vera Rubin architecture." },
                 conclusion: { step: "06", title: "Conclusion", content: "NVIDIA stands at the epicenter of the AI revolution, fortified by its CUDA ecosystem. With FY2027 revenue projected near $343.4B and Sovereign AI booming, its financial outlook is exceptionally robust. However, enduring success depends on managing physical and geopolitical limits—specifically U.S.-China trade tensions and TSMC dependency. By launching the Vera Rubin architecture to drastically cut AI inference costs, NVIDIA is positioned to maintain absolute market supremacy through the decade.", audio: "Conclusion. NVIDIA stands at the epicenter of the AI revolution, fortified by its CUDA ecosystem. With Fiscal Year 2027 revenue projected near 343.4 billion dollars and Sovereign AI booming, its financial outlook is exceptionally robust. However, enduring success depends on managing physical and geopolitical limits, specifically U.S.-China trade tensions and TSMC dependency. By launching the Vera Rubin architecture to drastically cut AI inference costs, NVIDIA is positioned to maintain absolute market supremacy through the decade." },
-                appx: { step: "07", title: "Appendices & Labs", labTitle: "Lab 2: Revenue Shift", labDesc: "Observe the structural change in NVIDIA's business over time.", preAi: "Pre-AI Boom (FY21)", aiEra: "AI Era (FY26)", dc: "Data Center", gm: "Gaming", pro: "Prof. Viz & Auto", dataSrc: "Data Sources", dataDesc1: "1. NVIDIA Corporation. 2026 Annual Review, Notice of Annual Meeting, Proxy Statement, and Form 10-K. Santa Clara, CA: NVIDIA Corporation, 2026.", dataDesc2: "2. 104 Job Bank - Server Product Program Manager", dataDesc3: "3. Aminext Blog: NVIDIA Blackwell Distributed AI Architecture", dataDesc4: "4. NVIDIA Data Center Technologies: Blackwell Architecture", dataDesc5: "5. NVIDIA Newsroom: NVIDIA & TSMC Bring AI Into Fabs", dataDesc6: "6. NVIDIA Solutions: Autonomous Vehicles Partners", dataDesc7: "7. NVIDIA Data Center: GPU Cloud Computing", dataDesc8: "8. Law & Econ Center: US Export Controls on AI", dataDesc9: "9. NVIDIA Data Center: Vera Rubin Platform", dataDesc10: "10. NVIDIA Newsroom: Next Generation of AI With Rubin", dataDesc11: "11. The Verge: NVIDIA launches Vera Rubin at CES 2026", dataDesc12: "12. NVIDIA Newsroom: Financial Results for Q4 & FY2026", dataDesc13: "13. CNBC: Nvidia reports earnings and guidance beat (Q4 2026)", learnTitle: "Learning Journey", learnDesc: "Through this project, we learned to apply theoretical frameworks (PESTEL, Lifecycle) to a hyper-growth firm, balancing hardware and software dynamics.", tooltipDieTitle: "GPU DIE", tooltipDie: "Core processor executing massive parallel AI & mathematical calculations using 2nd Gen Tensor Cores.", tooltipHbiTitle: "NV-HBI BRIDGE", tooltipHbi: "10 TB/s High-Bandwidth Interface bridging two GPU dies into a single, fully coherent unified chip.", tooltipHbmTitle: "HBM3e MEMORY", tooltipHbm: "High Bandwidth Memory providing ultra-fast 8 TB/s data access to feed the GPU cores without bottlenecks.", lab3Title: "Lab 3: Geopolitical Impact", lab3Desc: "Analyzing the US export restrictions and the resulting 'De-NVIDIA-ization' in the Chinese AI market. NVIDIA's market share in China drops dramatically as local and alternative solutions surge.", audio: "Appendices and Labs. Lab 1: Core Architecture. Interactive 3D Chip Explorer. Lab 2: Revenue Shift. Observe the structural change in NVIDIA's business over time. Lab 3: Geopolitical Impact. Analyzing the US export restrictions and the resulting De-NVIDIA-ization in the Chinese AI market. NVIDIA's market share in China drops dramatically as local and alternative solutions surge.", lab4Title: "Lab 4: Chip Architect", lab4Desc: "Rotate the NV-HBI pipes to connect the GPU (Start) to the HBM3e Memory (End).", gameReset: "Reset System", gameDisconn: "DATA FLOW: DISCONNECTED", gameConn: "DATA FLOW: OPTIMIZED" },
+                appx: { step: "07", title: "Appendices & Labs", labTitle: "Lab 2: Revenue Shift", labDesc: "Observe the structural change in NVIDIA's business over time.", preAi: "Pre-AI Boom (FY21)", aiEra: "AI Era (FY26)", dc: "Data Center", gm: "Gaming", pro: "Prof. Viz & Auto", dataSrc: "Data Sources", dataDesc1: "1. NVIDIA Corporation. 2026 Annual Review, Proxy Statement, and Form 10-K.", dataDesc2: "2. 104 Job Bank - Server Product Program Manager", dataDesc3: "3. Aminext Blog: NVIDIA Blackwell Distributed AI Architecture", dataDesc4: "4. NVIDIA Data Center Technologies: Blackwell Architecture", dataDesc5: "5. NVIDIA Newsroom: NVIDIA & TSMC Bring AI Into Fabs", dataDesc6: "6. NVIDIA Solutions: Autonomous Vehicles Partners", dataDesc7: "7. NVIDIA Data Center: GPU Cloud Computing", dataDesc8: "8. Law & Econ Center: US Export Controls on AI", dataDesc9: "9. NVIDIA Data Center: Vera Rubin Platform", dataDesc10: "10. NVIDIA Newsroom: Next Generation of AI With Rubin", dataDesc11: "11. The Verge: NVIDIA launches Vera Rubin at CES 2026", dataDesc12: "12. NVIDIA Newsroom: Financial Results for Q4 & FY2026", dataDesc13: "13. CNBC: Nvidia reports earnings and guidance beat (Q4 2026)", dataDesc14: "14. NVIDIA Newsroom: Q1 FY2026 Financial Results", dataDesc15: "15. NVIDIA Investor Relations: Financial Reports", dataDesc16: "16. NVIDIA 2026 Annual Report (PDF)", dataDesc17: "17. OANDA: NVIDIA Stock Analysis & Company Outlook", learnTitle: "Learning Journey", learnDesc: "Through this project, we learned to apply theoretical frameworks (PESTEL, Lifecycle) to a hyper-growth firm, balancing hardware and software dynamics.", tooltipDieTitle: "GPU DIE", tooltipDie: "Core processor executing massive parallel AI & mathematical calculations using 2nd Gen Tensor Cores.", tooltipHbiTitle: "NV-HBI BRIDGE", tooltipHbi: "10 TB/s High-Bandwidth Interface bridging two GPU dies into a single, fully coherent unified chip.", tooltipHbmTitle: "HBM3e MEMORY", tooltipHbm: "High Bandwidth Memory providing ultra-fast 8 TB/s data access to feed the GPU cores without bottlenecks.", lab3Title: "Lab 3: Geopolitical Impact", lab3Desc: "Analyzing the US export restrictions and the resulting 'De-NVIDIA-ization' in the Chinese AI market. NVIDIA's market share in China drops dramatically as local and alternative solutions surge.", audio: "Appendices and Labs. Lab 1: Core Architecture. Interactive 3D Chip Explorer. Lab 2: Revenue Shift. Observe the structural change in NVIDIA's business over time. Lab 3: Geopolitical Impact. Analyzing the US export restrictions and the resulting De-NVIDIA-ization in the Chinese AI market. NVIDIA's market share in China drops dramatically as local and alternative solutions surge.", lab4Title: "Lab 4: Chip Architect", lab4Desc: "Rotate the NV-HBI pipes to connect the GPU (Start) to the HBM3e Memory (End).", gameReset: "Reset System", gameDisconn: "DATA FLOW: DISCONNECTED", gameConn: "DATA FLOW: OPTIMIZED" },
                 glossary: { title: "Glossary Database", desc: "Hover over the cyber-cards to decrypt their definitions, or use AI for an ELI5 translation." },
                 ai: { title: "AI Utilization & Copyright", desc: "AI Disclosure: ChatGPT-4o was used for text structuring and language polishing. UI layout was assisted by AI code generation tools. All corporate logos and financial data are property of NVIDIA Corporation, used here strictly for educational fair use." },
                 team: { step: "08", title: "Group 1 Roster", collab: "Team Integration & Reflection: Instead of dividing the work mechanically, our team adopted an agile integration approach. We co-created the strategic frameworks via collaborative brainstorming, iteratively reviewed the PESTEL and financial data together, and collectively synthesized the final narrative to ensure a coherent and professional presentation.", did: "BIOMETRIC SCAN (Ver. 2)", roleTina: "Web Dev / Interactive Labs / Careers", rolePaul: "Industry Analysis", roleSets: "Business Opportunity Analysis", roleTamera: "Management Team & Future Outlook", roleNoks: "Macro Environment (PESTEL)", roleJoshua: "Financial Performance & Future Outlook", audio: "Group 1 Roster. Team Integration and Reflection: Instead of dividing the work mechanically, our team adopted an agile integration approach. We co-created the strategic frameworks via collaborative brainstorming, iteratively reviewed the PESTEL and financial data together, and collectively synthesized the final narrative to ensure a coherent and professional presentation." },
                 careers: { badge: "OPEN POSITION", title: "Server Product Program Manager", location: "Taipei, Taiwan", salary: "200k-300k NTD / Month", type: "Full-Time", desc: "The PPM team focuses on engineering development activities; managing multiple complex programs that support the development and TTM of new board-level graphics products for datacenter and pro visualization markets. Oversee and coordinate the GPU program and rollout from kickoff to production release.", apply: "APPLY VIA 104", ksaTitle: "Candidate Requirements (KSA)", kTitle: "Knowledge", kDesc: "Project management methodologies, hardware development lifecycle, Server/PC industry knowledge.", sTitle: "Skills", sDesc: "Schedule planning, resource allocation, risk mitigation strategies, and detailed execution reporting.", aTitle: "Abilities", aDesc: "Creative problem solving, strong cross-functional coordination (design, validation, global teams)." },
                 footer: "Instructor: <a href='https://www.ibs.ncnu.edu.tw/index.php/faculty/tenured-professor/299-smlo' target='_blank' class='hover:text-[#a3e635] transition-colors underline decoration-dashed underline-offset-4'>Prof. Shihmin Lo</a> | 1142 ITBM-EMI Term Project - Group 1. Educational purpose only.",
-                chatbot: { title: "AI Assistant", input: "Ask about the project...", q1: "Core Competence?", q2: "Main Risks?", q3: "Future Outlook?" }
+                faq: { title: "FAQ & KNOWLEDGE BASE", desc: "Interactive database for FY26 analysis.", q1: "Financial Performance (FY26)?", a1: "Record $215.9B revenue (+65% YoY) and $130.4B operating income, driven by $194B Data Center segment with >75% gross margins.", q2: "Biggest Operational Risk?", a2: "As a 'fabless' company, the heavy reliance on TSMC for 3nm/2nm chip production creates a critical single point of failure.", q3: "U.S.-China Tech Decoupling Impact?", a3: "A 'make-or-break' risk forcing NVIDIA to re-engineer products, negotiate chip access fees, and aggressively seek alternative markets.", q4: "Major Technological Shift?", a4: "The pivot from 'AI training' to 'AI inference', leading hyperscalers to scrutinize the ROI and physical energy limits of massive AI CapEx.", q5: "Addressing Energy Costs & ROI?", a5: "Transitioning to the Vera Rubin architecture in late 2026, engineered specifically to reduce AI inference costs tenfold.", q6: "What is NVIDIA's Competitive Moat?", a6: "An 85%-95% GPU market share fortified by the proprietary CUDA software platform, creating extremely high switching costs.", q7: "What is Sovereign AI?", a7: "Nations investing in domestic, state-controlled AI infrastructure. This segment tripled to over $30B in FY26.", q8: "Projected Outlook for FY27?", a8: "Revenue expected between $323.3B and $343.4B. CEO Jensen Huang anticipates at least $1 trillion in cumulative revenue this cycle." }
             },
             zh: {
+                profile: { title: "企業核心檔案", founded: "成立時間與總部", foundedVal: "1993年 / 加州聖塔克拉拉", founders: "共同創辦人", foundersVal: "黃仁勳 (Jensen Huang)、C. Malachowsky、C. Priem", model: "商業模式", modelVal: "無廠半導體 (Fabless) / AI 的引擎", desc: "NVIDIA 從最初的遊戲 3D 繪圖起家，現已發展為人工智慧與高效能運算的全球領導者。其 GPU 技術廣泛運用於機器學習、資料中心與自動駕駛等多個領域，被譽為「AI 的引擎」。" },
                 nav: { summary: "執行摘要", pestel: "總體環境", opp: "商業機會", ind: "產業分析", firm: "企業分析", conclusion: "最終結論", appx: "附錄與名詞", team: "團隊編制" },
-                hero: { tag: "ITBM-EMI TP G1", title1: "驅動", title2: "AI 新紀元", desc: "深入解析 NVIDIA 企業策略：從市場定位、生態系護城河到加速運算的未來展望。", startBtn: "啟動分析程序", teamBtn: "存取第一組檔案", officialBtn: "訪問 NVIDIA 官方網站" },
-                summary: { step: "01", title: "綜合執行摘要", content: "在 2026 財年，NVIDIA 鞏固了其作為全球 AI 基礎設施基石的地位，創造了破紀錄的 2,159 億美元營收，並掌握了 85% 至 95% 的 AI GPU 市場。然而，嚴峻的地緣政治與總體經濟脆弱性，正挑戰著這種超高速成長。", core: "核心競爭力", coreDesc: "專有的 CUDA 軟體生態系與硬體效能優勢（Blackwell / Rubin 架構）。", pos: "市場地位", posDesc: "在資料中心 AI GPU 市場擁有無可爭議的領導地位，毛利率超過 75%。", chal: "關鍵挑戰", chalDesc: "應對美中科技脫鉤、資本支出投資回報率 (ROI) 的審視，以及對台積電的依賴。", audio: "綜合執行摘要。在 2026 財年，NVIDIA 鞏固了其作為全球 AI 基礎設施基石的地位，創造了破紀錄的 2,159 億美元營收，並掌握了 85% 至 95% 的 AI GPU 市場。然而，嚴峻的地緣政治與總體經濟脆弱性，正挑戰著這種超高速成長。核心競爭力：專有的 CUDA 軟體生態系與硬體效能優勢。市場地位：在資料中心 AI GPU 市場擁有無可爭議的領導地位，毛利率超過 75%。關鍵挑戰：應對美中科技脫鉤、資本支出投資回報率的審視，以及對台積電的依賴。" },
+                hero: { tag: "ITBM-EMI TP G1", title1: "建構", title2: "AI 新紀元", desc: "深入解析 NVIDIA 企業策略：從市場定位、生態系護城河到加速運算的未來展望。", startBtn: "啟動分析程序", teamBtn: "存取第一組檔案", officialBtn: "訪問 NVIDIA 官方網站" },
+                summary: { step: "01", title: "綜合執行摘要", content: "本專案針對 NVIDIA 2026 財年的商業佈局進行深度戰略剖析。我們運用 PESTEL 總體環境、商業模式畫布 (BMC) 與產業生命週期等分析框架，探討 NVIDIA 如何在 AI 基礎設施市場維持 85%-95% 的絕對霸權。本報告將揭示其從「模型訓練」轉向「AI 推論」的獲利結構轉變，並評估美中科技脫鉤與高度依賴台積電等潛在的風險。", core: "分析框架", coreDesc: "結合 PESTEL、商業模式畫布與產業鏈地圖進行全面診斷。", pos: "核心洞察", posDesc: "推論市場爆發與主權 AI (Sovereign AI) 成為營收新引擎。", chal: "關鍵風險", chalDesc: "美中地緣政治出口管制與單一供應商 (台積電) 集中風險。", audio: "綜合執行摘要。本專案針對 NVIDIA 2026 財年的商業佈局進行深度戰略剖析。我們運用 PESTEL 總體環境、商業模式畫布與產業生命週期等分析框架，探討 NVIDIA 如何在 AI 基礎設施市場維持絕對霸權。本報告將揭示其從模型訓練轉向 AI 推論的獲利結構轉變，並評估美中科技脫鉤與高度依賴台積電等潛在的地緣政治與供應鏈風險。" },
                 pestel: { step: "02", title: "總體外部環境", 
                     tech: "科技環境：轉向推論", techDesc: "產業界正從訓練 AI 模型轉向執行推論。隨著能耗達到物理極限，NVIDIA 必須調整其 GPU 架構（Blackwell/Rubin），將重點放在能源效率和單次查詢成本上。", 
                     pol: "政治環境：美中地緣政治", polDesc: "截至 2026 年 5 月，美國對中國高階 AI 晶片出口的限制，造成了龐大的營收風險。在遵守美國法規的同時維持中國市場營收，仍是一項首要的營運挑戰。", 
@@ -423,7 +435,7 @@
                     title: "商業模式畫布 (Business Model Canvas)", desc: "將游標移至各模組以檢視策略分析細節",
                     kp: { title: "關鍵合作夥伴 (Key Partners)", items: ["台積電 TSMC, 三星 Samsung (晶圓代工)", "Microsoft Azure, AWS, Google Cloud (雲端供應商 CSPs)", "OEMs & 系統設備商 (Dell, HP, Lenovo)", "軟體生態系合作夥伴", "汽車製造商"] },
                     ka: { title: "關鍵活動 (Key Activities)", items: ["GPU 與晶片 SoC 研發", "軟體開發 (CUDA, AI 框架)", "建立生態系 (開發者與研究人員)", "供應鏈管理", "行銷與銷售"] },
-                    vp: { title: "價值主張 (Value Proposition)", items: ["高效能圖形處理與逼真的光線追蹤", "為 AI 模型提供無與倫比的運算能力", "為自動駕駛車輛提供可擴展的硬體/軟體", "為專業視覺化提供高階渲染", "全面的軟體堆疊 (CUDA)"] },
+                    vp: { title: "價值主張 (Value Proposition)", items: ["高效能圖形處理與逼定的光線追蹤", "為 AI 模型提供無與倫比的運算能力", "為自動駕駛車輛提供可擴展的硬體/軟體", "為專業視覺化提供高階渲染", "全面的軟體堆疊 (CUDA)"] },
                     cr: { title: "顧客關係 (Customer Relationships)", items: ["開發者社群 (GTC 大會、論壇)", "B2B 夥伴關係 (科技巨頭、汽車製造商)", "品牌忠誠度 (遊戲玩家的狂熱追隨)"] },
                     cs: { title: "目標客層 (Customer Segments)", items: ["遊戲玩家與 PC 愛好者", "企業 IT 與雲端供應商 (Hyperscalers)", "AI 研究人員與開發者", "汽車產業", "專業創作者"] },
                     kr: { title: "關鍵資源 (Key Resources)", items: ["智慧財產權 (IP) 與專利", "人力資本 (工程師、AI 研究員)", "CUDA 平台", "品牌資產"] },
@@ -432,21 +444,22 @@
                     rs: { title: "收益流 (Revenue Streams)", items: ["硬體銷售 (資料中心、遊戲、專業視覺、汽車)", "軟體授權與訂閱 (NVIDIA AI Enterprise)", "雲端服務與專門的技術支援合約"] }
                 },
                 ind: { step: "04", title: "產業鏈分析", 
-                    supply: "供應鏈結構", design: "無廠設計：晶片架構與CUDA", mfg: "晶圓代工：台積電3/4nm與CoWoS", mem: "記憶體：SK海力士/美光 HBM3e", asm: "系統廠：液冷 GB200 NVL72 機櫃", 
-                    coop: "競合關係 (Co-opetition)", coopDesc: "NVIDIA 處於微妙的「競合 (Frenemy)」動態中。雲端巨頭既是它最大的客戶，也是未來最具威脅的潛在競爭者。", comp: "戰略生態系綁定：高度依賴台積電的先進製程與 CoWoS 封裝；並仰賴鴻海、廣達等台系組裝廠將晶片打造成龐大的液冷伺服器機櫃。", asic: "反輝達聯盟的崛起：為降低成本與擺脫 CUDA 壟斷，雲端巨頭積極投資自研 ASIC (如 TPU、Maia)，並籌組 UALink 等開源聯盟。", 
-                    life: "產業生命週期", lifeDesc: "受惠於破紀錄的 AI 資本支出，產業正處於超高速成長期。為防止硬體商品化，NVIDIA 採取激進的「一年一更」週期 (Hopper ➔ Blackwell ➔ Rubin)，強迫市場不斷進行世代更新以維持利潤護城河。", intro: "研發設計", growth: "量產爬坡", mat: "強勁成長", dec: "世代更新", audio: "產業鏈分析。供應鏈結構：NVIDIA 專注於無廠設計，高度依賴台積電的 CoWoS 先進封裝、海力士的 HBM，以及鴻海的系統組裝。競合關係：NVIDIA 透過戰略結盟鞏固產能，同時需防範雲端巨頭籌組反輝達聯盟與自研 ASIC 晶片的威脅。產業生命週期：受惠於龐大資本支出，產業處於高速成長，NVIDIA 以一年一更的激進週期強迫市場不斷世代更新。" },
+                    overview: "全端運算平台供應商", overviewDesc: "NVIDIA 在半導體與 AI 基礎設施產業中營運，已從單純的 GPU 公司轉型為提供全端運算平台的供應商，結合晶片、系統、網路、軟體與開發者工具，藉此大幅提高競爭者的進入門檻。",
+                    supply: "供應鏈結構", design: "無廠設計：晶片架構與CUDA", mfg: "晶圓代工：台積電3/4nm與CoWoS", mem: "封裝與測試：Amkor / SPIL", asm: "系統組裝：Foxconn / Wistron", 
+                    coop: "競合關係 (Co-opetition)", coopDesc: "NVIDIA 處於微妙的競合動態中。由於沒有單一公司能掌控整個 AI 生態系，這促成了既競爭又合作的產業樣貌。", coop1: "台積電 (TSMC)：在先進產能上存在競爭，但同時密切合作以生產最先進的晶片。", coop2: "鴻海與緯創 (Foxconn & Wistron)：伺服器系統的製造夥伴，但在廣泛的電子市場中可能支援競爭對手。", coop3: "雲端供應商 (CSPs)：AI 基礎設施的最大客戶，卻也同時積極開發自研的 AI 加速晶片。", coop4: "軟體生態系夥伴：建立在 CUDA 平台上，但部分開發者可能同時支援競爭的開源硬體生態系。",
+                    life: "產業生命週期", lifeDesc: "有別於傳統產業生命週期必然走向「衰退期」，NVIDIA 透過激進的「一年一更」架構週期（Hopper ➔ Blackwell ➔ Rubin），強迫市場不斷進入「世代更新」。這種飛輪效應成功避免了硬體商品化，並將雲端巨頭鎖定在持續升級的無窮迴圈中。", intro: "研發設計", growth: "量產爬坡", mat: "強勁成長", dec: "強制世代更新", loopDesc: "NVIDIA 透過激進的一年一更產品週期避開衰退期，強迫整個市場不斷進入世代更新。", audio: "產業鏈分析。供應鏈結構：NVIDIA 專注於無廠設計，高度依賴台積電的 CoWoS 先進封裝、海力士的 HBM，以及鴻海的系統組裝。競合關係：NVIDIA 透過戰略結盟鞏固產能，同時需防範雲端巨頭籌組反輝達聯盟與自研 ASIC 晶片的威脅。產業生命週期：受惠於龐大資本支出，產業處於高速成長，NVIDIA 以一年一更的激進週期強迫市場不斷世代更新。" },
                 firm: { step: "05", title: "企業深度分析", 
-                    fin: "財務績效表現 (2026財年)", rev: "總營收", revDesc: "年增 65%。資料中心營收達 1,940 億美元 (年增 68%)，受惠於 Blackwell AI 工廠的大規模部署。", margin: "營業利益", marginDesc: "1,304億美元 (年增60%)。反映了全球 AI 基礎設施的強勁建置需求。", netw: "網路基礎設施", netwDesc: "突破 310 億美元，受惠於 NVLink 運算架構、乙太網路與 InfiniBand 的成長。", sov: "主權 AI 投資", sovDesc: "成長超過三倍，突破 300 億美元，各國大舉投資建立本土 AI 基礎設施。", eps: "EPS 與現金流", epsDesc: "稀釋 EPS 達 $4.90 (年增 67%)。創造 1,030 億美元營業現金流，並向股東回饋 410 億美元。", inf: "推論黃金交叉", infDesc: "推論工作負載正式超越模型訓練成為主流，帶動對高效能 GPU 運算的持續需求。", 
-                    mgmt: "管理團隊", mgmtDesc: "由深具遠見的創辦人暨執行長黃仁勳 (Jensen Huang) 領軍，NVIDIA 的管理團隊完美整合了軟硬體創新。核心高管包括推動財務策略的 Colette Kress (CFO)、拓展全球市場的 Jay Puri (營運副總)、負責管理高度依賴台積電供應鏈的 Debora Shoquist，以及 Tim Teter (法務長)。團隊以高度一致的戰略，精準應對雲端巨頭需求、美中出口管制，並成功推動 Blackwell 架構的全球部署。",
-                    outlook: "未來展望 (2027財年)", outlookDesc: "預估 2027 財年營收達 3,233億-3,434億美元 (毛利率 >75%)。核心戰略：(1) 完美執行 Blackwell 全球放量。(2) 防禦 CSP 自研 ASIC 威脅，穩固市佔率。(3) 擴大軟體訂閱經常性收入。(4) 佈局 2026 下半年的 Vera Rubin 架構。", audio: "企業深度分析。2026財年財務績效表現：總營收高達 2,159億美元，年增65%，其中資料中心營收達 1,940億美元，年增68%。營業利益為 1,304億美元。在網路基礎設施方面，受惠於 NVLink 與 InfiniBand，營收突破 310億美元。主權 AI 領域成長超過三倍，營收突破 300億美元。稀釋每股盈餘成長 67% 來到 4.90 美元。公司創造了 1030 億美元的營業現金流，並向股東回饋 410 億美元。在營運結構上，推論的工作負載已正式超越模型訓練成為主流。管理團隊包含創辦人黃仁勳與 Chris Malachowsky，以及高管 Colette Kress 等人。2027財年未來展望：預估營收達 3,233億至 3,434億美元。核心戰略包含完美執行 Blackwell 放量、防禦 ASIC 威脅、擴大軟體營收，以及佈局新一代 Vera Rubin 架構。" },
+                    fin: "財務績效表現 (2026財年)", rev: "總營收", revDesc: "年增 65%。受惠於 Blackwell AI 工廠的大規模部署。", margin: "營業利益", marginDesc: "年增60%。反映了全球 AI 基礎設施的強勁建置需求。", netw: "網路基礎設施", netwDesc: "受惠於 NVLink 運算架構、乙太網路與 InfiniBand 的成長。", sov: "主權 AI 投資", sovDesc: "成長超過三倍，各國大舉投資建立本土 AI 基礎設施。", eps: "稀釋 EPS", epsDesc: "年增 67%。創造 1,030 億美元營業現金流。", inf: "推論黃金交叉", infDesc: "推論工作負載正式超越模型訓練成為主流。", 
+                    mgmt: "管理團隊", mgmtDesc: "由深具遠見的創辦人暨執行長黃仁勳領軍，管理團隊完美整合了軟硬體創新。核心高管包括推動財務策略的 Colette Kress (CFO)、拓展全球市場的 Jay Puri、管理台積電供應鏈的 Debora Shoquist，以及 Tim Teter (法務長)。",
+                    outlook: "未來展望 (2027財年)", outlookDesc: "2027財年預估營收目標", pillar1: "完美執行 Blackwell 全球放量佈署。", pillar2: "防禦 CSP 自研 ASIC 威脅，穩固 85-95% 市佔率。", pillar3: "佈局 Vera Rubin 架構，大幅降低 AI 推論成本。", audio: "企業深度分析。2026財年財務績效表現：總營收高達 2,159億美元，年增65%，其中資料中心營收達 1,940億美元，年增68%。營業利益為 1,304億美元。在網路基礎設施方面，受惠於 NVLink 與 InfiniBand，營收突破 310億美元。主權 AI 領域成長超過三倍，營收突破 300億美元。稀釋每股盈餘成長 67% 來到 4.90 美元。公司創造了 1030 億美元的營業現金流，並向股東回饋 410 億美元。在營運結構上，推論的工作負載已正式超越模型訓練成為主流。管理團隊包含創辦人黃仁勳與 Chris Malachowsky，以及高管 Colette Kress 等人。2027財年未來展望：預估營收達 3,233億至 3,434億美元。核心戰略包含完美執行 Blackwell 放量、防禦 ASIC 威脅、擴大軟體營收，以及佈局新一代 Vera Rubin 架構。" },
                 conclusion: { step: "06", title: "最終結論", content: "NVIDIA 穩居 AI 革命的核心，透過 CUDA 生態系建立極高的進入門檻。隨著 2027 財年營收預估逼近 3,434 億美元且主權 AI 爆發，其財務前景極度看好。然而，長期的成功取決於如何管理地緣政治與規模極限（如美中貿易戰與對台積電的依賴）。透過推出 Vera Rubin 架構以大幅降低推論成本與能耗，NVIDIA 有望在未來十年持續維持絕對的市場霸權。", audio: "最終結論。NVIDIA 穩居 AI 革命的核心，透過 CUDA 生態系建立極高的進入門檻。隨著 2027 財年營收預估逼近 3,434 億美元且主權 AI 爆發，其財務前景極度看好。然而，長期的成功取決於如何管理地緣政治與規模極限，例如美中貿易戰與對台積電的依賴。透過推出 Vera Rubin 架構以大幅降低推論成本與能耗，NVIDIA 有望在未來十年持續維持絕對的市場霸權。" },
-                appx: { step: "07", title: "附錄與實驗室", labTitle: "實驗 2：營收結構轉移", labDesc: "動態觀察 NVIDIA 業務重心的結構性改變。", preAi: "AI 爆發前 (2021財年)", aiEra: "AI 時代 (2026財年)", dc: "資料中心", gm: "遊戲與消費級", pro: "專業視覺與車用", dataSrc: "資料來源庫", dataDesc1: "1. NVIDIA Corporation. 2026 Annual Review, Notice of Annual Meeting, Proxy Statement, and Form 10-K. Santa Clara, CA: NVIDIA Corporation, 2026.", dataDesc2: "2. 104 人力銀行 - 伺服器產品專案經理 (PPM) 職缺", dataDesc3: "3. Aminext Blog - NVIDIA Blackwell 分散式 AI 架構解析", dataDesc4: "4. NVIDIA 官方網站 - Blackwell 架構技術介紹", dataDesc5: "5. NVIDIA 新聞室：NVIDIA 與 TSMC 將 AI 導入晶圓廠", dataDesc6: "6. NVIDIA 官方：自動駕駛車輛合作夥伴", dataDesc7: "7. NVIDIA 資料中心：GPU 雲端運算", dataDesc8: "8. 法律與經濟中心：美國 AI 與半導體出口管制", dataDesc9: "9. NVIDIA 資料中心：Vera Rubin 平台介紹", dataDesc10: "10. NVIDIA 新聞室：以 Rubin 平台啟動下一代 AI", dataDesc11: "11. The Verge：NVIDIA 於 CES 2026 發布 Vera Rubin", dataDesc12: "12. NVIDIA 新聞室：2026 財年第 4 季與全年財務報告", dataDesc13: "13. CNBC：NVIDIA 財報超乎預期，資料中心營收大增", learnTitle: "學習歷程紀錄", learnDesc: "透過本專案，本組學習了如何將理論框架（PESTEL、生命週期）應用於真實世界的高成長企業，並理解軟硬體整合的商業動態。", tooltipDieTitle: "GPU 裸晶 (DIE)", tooltipDie: "極限尺寸 GPU 核心，具備第二代 FP4 張量核心，負責處理龐大 AI 運算。", tooltipHbiTitle: "NV-HBI 互連橋接", tooltipHbi: "10 TB/s 超高速互連介面，將兩塊晶片無縫統合成單一處理器。", tooltipHbmTitle: "HBM3e 高頻寬記憶體", tooltipHbm: "提供 8 TB/s 頻寬，用於極速存取 AI 模型資料。", lab3Title: "實驗 3：地緣政治衝擊 (Geopolitical Impact)", lab3Desc: "分析美國出口限制導致的中國市場「去輝達化」現象。輝達在中國 AI 加速器市佔率預估大幅流失，華為與 AMD 成為主要受惠者。", audio: "附錄與實驗室。實驗一：核心架構。互動式 3D 晶片探索。實驗二：營收結構轉移。動態觀察 NVIDIA 業務重心的結構性改變。實驗三：地緣政治衝擊。分析美國出口限制導致的中國市場「去輝達化」現象。輝達在中國 AI 加速器市佔率預估大幅流失，華為與 AMD 成為主要受惠者。", lab4Title: "實驗 4：晶片架構師", lab4Desc: "點擊旋轉 NV-HBI 互連通道，將 GPU 核心 (起點) 與 HBM3e 記憶體 (終點) 成功連線以最佳化傳輸。", gameReset: "重置系統", gameDisconn: "狀態：連線中斷", gameConn: "狀態：傳輸最佳化" },
+                appx: { step: "07", title: "附錄與實驗室", labTitle: "實驗 2：營收結構轉移", labDesc: "動態觀察 NVIDIA 業務重心的結構性改變。", preAi: "AI 爆發前 (2021財年)", aiEra: "AI 時代 (2026財年)", dc: "資料中心", gm: "遊戲與消費級", pro: "專業視覺與車用", dataSrc: "資料來源庫", dataDesc1: "1. NVIDIA Corporation. 2026 Annual Review, Proxy Statement, and Form 10-K.", dataDesc2: "2. 104 人力銀行 - 伺服器產品專案經理 (PPM) 職缺", dataDesc3: "3. Aminext Blog - NVIDIA Blackwell 分散式 AI 架構解析", dataDesc4: "4. NVIDIA 官方網站 - Blackwell 架構技術介紹", dataDesc5: "5. NVIDIA 新聞室：NVIDIA 與 TSMC 將 AI 導入晶圓廠", dataDesc6: "6. NVIDIA 官方：自動駕駛車輛合作夥伴", dataDesc7: "7. NVIDIA 資料中心：GPU 雲端運算", dataDesc8: "8. 法律與經濟中心：美國 AI 與半導體出口管制", dataDesc9: "9. NVIDIA 資料中心：Vera Rubin 平台介紹", dataDesc10: "10. NVIDIA 新聞室：以 Rubin 平台啟動下一代 AI", dataDesc11: "11. The Verge：NVIDIA 於 CES 2026 發布 Vera Rubin", dataDesc12: "12. NVIDIA 新聞室：2026 財年第 4 季與全年財務報告", dataDesc13: "13. CNBC：NVIDIA 財報超乎預期，資料中心營收大增", dataDesc14: "14. NVIDIA 新聞室：2026 財年第 1 季財務報告", dataDesc15: "15. NVIDIA 投資者關係：財務報告", dataDesc16: "16. NVIDIA 2026 年度報告 (PDF)", dataDesc17: "17. OANDA：NVIDIA 美股分析與企業展望", learnTitle: "學習歷程紀錄", learnDesc: "透過本專案，本組學習了如何將理論框架（PESTEL、生命週期）應用於真實世界的高成長企業，並理解軟硬體整合的商業動態。", tooltipDieTitle: "GPU 裸晶 (DIE)", tooltipDie: "極限尺寸 GPU 核心，具備第二代 FP4 張量核心，負責處理龐大 AI 運算。", tooltipHbiTitle: "NV-HBI 互連橋接", tooltipHbi: "10 TB/s 超高速互連介面，將兩塊晶片無縫統合成單一處理器。", tooltipHbmTitle: "HBM3e 高頻寬記憶體", tooltipHbm: "提供 8 TB/s 頻寬，用於極速存取 AI 模型資料。", lab3Title: "實驗 3：地緣政治衝擊 (Geopolitical Impact)", lab3Desc: "分析美國出口限制導致的中國市場「去輝達化」現象。輝達在中國 AI 加速器市佔率預估大幅流失，華為與 AMD 成為主要受惠者。", audio: "附錄與實驗室。實驗一：核心架構。互動式 3D 晶片探索。實驗二：營收結構轉移。動態觀察 NVIDIA 業務重心的結構性改變。實驗三：地緣政治衝擊。分析美國出口限制導致的中國市場「去輝達化」現象。輝達在中國 AI 加速器市佔率預估大幅流失，華為與 AMD 成為主要受惠者。", lab4Title: "實驗 4：晶片架構師", lab4Desc: "點擊旋轉 NV-HBI 互連通道，將 GPU 核心 (起點) 與 HBM3e 記憶體 (終點) 成功連線以最佳化傳輸。", gameReset: "重置系統", gameDisconn: "狀態：連線中斷", gameConn: "狀態：傳輸最佳化" },
                 glossary: { title: "專有名詞情報庫 (Cyber-Grid Database)", desc: "將游標懸浮於資料卡片上以解密詳細定義，也可點擊按鈕請 AI 將複雜定義翻譯成白話文。" },
                 ai: { title: "AI 使用揭露與版權宣告", desc: "AI 輔助說明：本專案使用 ChatGPT 進行文句潤飾與結構優化，並透過 AI 程式碼生成工具輔助前端網頁 UI 刻板。所有商標與財務數據版權皆屬 NVIDIA Corporation 所有，本網頁僅供教育學習與合理使用。" },
                 team: { step: "08", title: "第一組人員名冊", collab: "團隊整合與反思：有別於機械式的任務分割，我們團隊採用「敏捷整合」的模式進行協作。我們透過共同腦力激盪建立分析框架，一起交叉審閱 PESTEL 因素與財務數據，最終由全體組員共同收斂簡報論述，確保了專案內容的深度與高度一致性。", did: "生物辨識掃描 (Ver. 2)", roleTina: "網頁製作 / 互動實驗室 / 職缺模組", rolePaul: "產業分析 (Industry Analysis)", roleSets: "商業機會分析 (Business Opportunity)", roleTamera: "管理團隊 / 未來展望", roleNoks: "總體環境 (PESTEL)", roleJoshua: "財務績效 / 未來展望", audio: "第一組人員名冊。團隊整合與反思：有別於機械式的任務分割，我們團隊採用「敏捷整合」的模式進行協作。我們透過共同腦力激盪建立分析框架，一起交叉審閱 PESTEL 因素與財務數據，最終由全體組員共同收斂簡報論述，確保了專案內容的深度與高度一致性。" },
                 careers: { badge: "招募中 / OPEN POSITION", title: "伺服器產品專案經理 (PPM)", location: "台灣, 台北市內湖區", salary: "月薪 20 萬 - 30 萬新台幣", type: "全職 (Full-Time)", desc: "PPM 團隊專注於工程開發活動；管理多個複雜專案，支援資料中心與專業視覺化市場的板級圖形產品開發與上市 (TTM)。負責統籌並協調 GPU 專案，涵蓋從專案啟動到量產發布的全生命週期。", apply: "透過 104 應徵", ksaTitle: "候選人條件要求 (KSA)", kTitle: "知識 (Knowledge)", kDesc: "熟悉專案管理軟體與方法論；理解硬體開發生命週期；具備伺服器與 PC 產業知識。", sTitle: "技能 (Skills)", sDesc: "排程規劃、資源分配、風險評估與減緩策略，以及撰寫詳盡的執行報告。", aTitle: "能力 (Abilities)", aDesc: "具備創意解決問題的能力，以及強大的跨部門協調力（需對接設計、驗證與全球資源團隊）。" },
                 footer: "指導教授: <a href='https://www.ibs.ncnu.edu.tw/index.php/faculty/tenured-professor/299-smlo' target='_blank' class='hover:text-[#a3e635] transition-colors underline decoration-dashed underline-offset-4'>Prof. Shihmin Lo</a> | 1142 ITBM-EMI 期末專案 - 第一組. 僅供學術教育用途.",
-                chatbot: { title: "AI 專案助理", input: "詢問關於本報告的內容...", q1: "NVIDIA的核心競爭力？", q2: "目前最大的風險？", q3: "未來的展望預測？" }
+                faq: { title: "常見問題與情報庫", desc: "2026 財年分析互動式資料庫", q1: "2026 財年的財務表現如何？", a1: "創造了破紀錄的 2,159 億美元營收 (年增 65%) 與 1,304 億美元營業利益。主要由高達 1,940 億美元的資料中心業務驅動，毛利率維持在 75% 以上的驚人水準。", q2: "供應鏈最大的營運風險是什麼？", a2: "NVIDIA 作為「無廠半導體 (Fabless)」，高度依賴台灣台積電 (TSMC) 的 3奈米與 2奈米先進製程，這形成了關鍵的單點故障風險。", q3: "美中科技脫鉤帶來什麼影響？", a3: "這是生死攸關的風險，迫使 NVIDIA 必須重新設計降規晶片以符合出口管制，並積極開拓歐洲、印度與東南亞等替代市場。", q4: "AI 產業目前最大的技術轉變為何？", a4: "產業正從「AI 訓練 (Training)」轉向「AI 推論 (Inference)」。由於推論極耗能源，雲端巨頭正嚴格審視龐大 AI 資本支出的投資回報率 (ROI) 與能耗極限。", q5: "NVIDIA 如何應對能耗與 ROI 疑慮？", a5: "透過在 2026 下半年推出下一代 Vera Rubin 架構，該架構專為將 AI 推論成本大幅降低十倍而設計，以防禦 ASIC 競爭對手。", q6: "NVIDIA 真正的競爭護城河是什麼？", a6: "擁有 85%-95% 的市佔率，這主要歸功於其專有的 CUDA 軟體平台。CUDA 將開發者牢牢鎖定在 NVIDIA 的生態系中，創造了極高的轉換成本。", q7: "「主權 AI (Sovereign AI)」是什麼？", a7: "指各國政府直接投資建立屬於國家控制的本土 AI 基礎設施。該業務板塊在 2026 財年成長了三倍，營收突破 300 億美元。", q8: "2027 財年的財務展望預測？", a8: "預估營收將達 3,233 億至 3,434 億美元。執行長黃仁勳預期在本波 AI 週期中，將創造至少 1 兆美元的累計營收。" }
             }
         };
 
@@ -465,7 +478,6 @@
         let currentLang = 'en';
         let labTab = 'datacenter';
         let activeSectionId = 'home';
-        let chatMessages = [];
 
         // === 輔助函數 ===
         function getI18n(path) {
@@ -499,7 +511,6 @@
             `;
         }
 
-        // 動態生成頁面結構
         function renderContent() {
             const main = document.getElementById('main-content');
             let html = '';
@@ -631,6 +642,16 @@
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out">
                         ${createSectionHeading('ind.step', 'ind.title', 'layers', 'ind.audio')}
                         <div class="space-y-6">
+                            <!-- Overview Card -->
+                            <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
+                                <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"><div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#a3e635_50%,transparent_100%)]"></div></div>
+                                <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
+                                    <div class="text-[10px] text-[#a3e635] font-mono mb-1 tracking-widest uppercase">INDUSTRY_POSITIONING</div>
+                                    <h3 class="font-bold mb-4 text-lg uppercase text-slate-900 dark:text-white" data-i18n="ind.overview"></h3>
+                                    <p class="text-sm opacity-80 leading-relaxed font-medium" data-i18n="ind.overviewDesc"></p>
+                                </div>
+                            </div>
+
                             <!-- Supply Chain Card -->
                             <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
                                 <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"><div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#a3e635_50%,transparent_100%)]"></div></div>
@@ -649,34 +670,60 @@
                                 </div>
                             </div>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
                                 <!-- Coopetition -->
                                 <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
                                     <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
                                         <h3 class="font-bold font-mono uppercase tracking-widest mb-4 text-lg text-slate-900 dark:text-white" data-i18n="ind.coop"></h3>
                                         <p class="text-sm mb-6 opacity-80" data-i18n="ind.coopDesc"></p>
                                         <ul class="space-y-4 text-sm font-mono p-5 rounded-2xl border bg-slate-50 border-slate-200 dark:bg-[#020806] dark:border-slate-800">
-                                            <li class="flex items-start gap-3"><span class="text-rose-500 font-bold mt-0.5">[!]</span> <div class="leading-relaxed" data-i18n="ind.comp"></div></li>
-                                            <li class="flex items-start gap-3"><span class="text-amber-500 font-bold mt-0.5">[?]</span> <div class="leading-relaxed" data-i18n="ind.asic"></div></li>
+                                            <li class="flex items-start gap-3"><span class="text-rose-500 font-bold mt-0.5">[1]</span> <div class="leading-relaxed" data-i18n="ind.coop1"></div></li>
+                                            <li class="flex items-start gap-3"><span class="text-amber-500 font-bold mt-0.5">[2]</span> <div class="leading-relaxed" data-i18n="ind.coop2"></div></li>
+                                            <li class="flex items-start gap-3"><span class="text-blue-500 font-bold mt-0.5">[3]</span> <div class="leading-relaxed" data-i18n="ind.coop3"></div></li>
+                                            <li class="flex items-start gap-3"><span class="text-emerald-500 font-bold mt-0.5">[4]</span> <div class="leading-relaxed" data-i18n="ind.coop4"></div></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <!-- Life Cycle -->
+                                <!-- Life Cycle (Circular Flywheel) -->
                                 <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
                                      <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"><div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#a3e635_50%,transparent_100%)]"></div></div>
-                                    <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
-                                        <h3 class="font-bold font-mono uppercase tracking-widest mb-8 text-lg text-slate-900 dark:text-white" data-i18n="ind.life"></h3>
-                                        <div class="relative pt-4 pb-8">
-                                            <div class="absolute top-1/2 left-0 w-full h-1.5 -translate-y-1/2 rounded-full bg-slate-200 dark:bg-slate-800"></div>
-                                            <div class="absolute top-1/2 left-0 w-[75%] h-1.5 -translate-y-1/2 rounded-l-full bg-gradient-to-r from-transparent to-[#a3e635]"></div>
-                                            <div class="absolute top-1/2 left-[75%] w-6 h-6 rounded-none rotate-45 border-2 border-[#a3e635] bg-[#020806] -translate-y-1/2 -translate-x-1/2 shadow-[0_0_15px_#a3e635] flex items-center justify-center">
-                                                <div class="w-2 h-2 bg-[#a3e635] animate-ping"></div>
+                                    <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300 flex flex-col justify-between">
+                                        <h3 class="font-bold font-mono uppercase tracking-widest mb-6 text-lg text-slate-900 dark:text-white" data-i18n="ind.life"></h3>
+                                        <p class="text-sm opacity-80 mb-6" data-i18n="ind.lifeDesc"></p>
+                                        
+                                        <!-- Circular Tech Ring UI -->
+                                        <div class="relative w-full py-10 flex flex-col gap-6 items-center">
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full relative z-10">
+                                                <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-[#020806] border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm relative group/node">
+                                                    <i data-lucide="flask-conical" class="w-6 h-6 text-blue-500"></i>
+                                                    <span class="text-[10px] font-mono font-bold text-center" data-i18n="ind.intro"></span>
+                                                </div>
+                                                <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-[#020806] border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm relative group/node">
+                                                    <i data-lucide="factory" class="w-6 h-6 text-amber-500"></i>
+                                                    <span class="text-[10px] font-mono font-bold text-center" data-i18n="ind.growth"></span>
+                                                </div>
+                                                <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-[#020806] border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm relative group/node transform scale-105 border-[#a3e635] shadow-[0_0_10px_rgba(163,230,53,0.3)]">
+                                                    <i data-lucide="trending-up" class="w-6 h-6 text-[#a3e635]"></i>
+                                                    <span class="text-[10px] font-mono font-bold text-[#a3e635] text-center" data-i18n="ind.mat"></span>
+                                                </div>
+                                                <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-[#020806] border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm relative group/node border-rose-500">
+                                                    <i data-lucide="refresh-cw" class="w-6 h-6 text-rose-500 animate-spin-slow" style="animation-duration: 4s;"></i>
+                                                    <span class="text-[10px] font-mono font-bold text-rose-500 text-center" data-i18n="ind.dec"></span>
+                                                </div>
                                             </div>
+                                            <!-- Return Arrow SVG -->
+                                            <svg class="w-full h-12 text-slate-300 dark:text-slate-700 -mt-8 relative z-0" viewBox="0 0 400 50" preserveAspectRatio="none">
+                                                <path d="M 350 10 C 350 40, 50 40, 50 10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6"/>
+                                                <polygon points="45,15 50,5 55,15" fill="currentColor"/>
+                                                <!-- Glowing Path -->
+                                                <path d="M 350 10 C 350 40, 50 40, 50 10" fill="none" stroke="#a3e635" stroke-width="3" class="animate-[dash_3s_linear_infinite]" stroke-dasharray="15 300"/>
+                                            </svg>
                                         </div>
-                                        <div class="flex justify-between text-[10px] font-mono opacity-60 uppercase">
-                                            <span data-i18n="ind.intro"></span><span data-i18n="ind.growth"></span><span class="text-[#a3e635] font-bold opacity-100" data-i18n="ind.mat"></span><span data-i18n="ind.dec"></span>
+
+                                        <div class="mt-4 p-4 border border-[#a3e635]/30 bg-[#a3e635]/10 rounded-xl">
+                                            <span class="text-[#a3e635] font-bold font-mono text-[10px] uppercase mb-1 block">STRATEGIC_LOOP //</span>
+                                            <span class="text-xs font-medium leading-relaxed opacity-90" data-i18n="ind.loopDesc"></span>
                                         </div>
-                                        <p class="mt-6 text-sm opacity-80" data-i18n="ind.lifeDesc"></p>
                                     </div>
                                 </div>
                             </div>
@@ -685,72 +732,91 @@
                 </section>
             `;
 
-            // Firm Analysis
+            // Firm Analysis (戰情室排版)
             html += `
                 <section id="firm" class="scroll-mt-32">
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out">
                         ${createSectionHeading('firm.step', 'firm.title', 'bar-chart-3', 'firm.audio')}
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Fin -->
-                            <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
+                        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                            <!-- Fin (Left 7 cols) -->
+                            <div class="xl:col-span-7 relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
                                 <div class="hidden dark:block absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"><div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#a3e635_50%,transparent_100%)]"></div></div>
                                 <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
-                                    <h3 class="font-bold font-mono uppercase tracking-widest mb-6 text-lg text-slate-900 dark:text-white" data-i18n="firm.fin"></h3>
+                                    <div class="flex items-center justify-between mb-6 border-b border-[#76b900]/20 pb-4">
+                                        <h3 class="font-bold font-mono uppercase tracking-widest text-xl text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="bar-chart-2" class="w-6 h-6 text-[#a3e635]"></i> <span data-i18n="firm.fin"></span></h3>
+                                        <div class="text-[10px] font-mono bg-[#a3e635]/20 text-[#a3e635] px-2 py-1 rounded border border-[#a3e635]/30 animate-pulse">LIVE DATA</div>
+                                    </div>
                                     <div class="space-y-4">
                                         <!-- Core Financials -->
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-[#a3e635] bg-green-50 dark:bg-[#020806]">
-                                                <div class="text-xs font-mono opacity-70 mb-1 uppercase" data-i18n="firm.rev"></div>
-                                                <div class="text-xl font-bold text-[#a3e635] drop-shadow-[0_0_5px_rgba(163,230,53,0.5)] leading-none mt-1">$215.9B</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.revDesc"></div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-[#a3e635] bg-green-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair">
+                                                <div class="text-xs font-mono opacity-70 mb-1 uppercase flex items-center gap-1"><i data-lucide="dollar-sign" class="w-3 h-3 text-[#a3e635]"></i> <span data-i18n="firm.rev"></span></div>
+                                                <div class="text-2xl lg:text-3xl font-black text-[#a3e635] drop-shadow-[0_0_5px_rgba(163,230,53,0.5)] leading-none mt-1">$215.9B</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed" data-i18n="firm.revDesc"></div>
                                             </div>
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-slate-500 bg-slate-50 dark:bg-[#020806]">
-                                                <div class="text-xs font-mono opacity-70 mb-1 uppercase" data-i18n="firm.margin"></div>
-                                                <div class="text-xl font-bold text-slate-900 dark:text-white leading-none mt-1">$130.4B</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.marginDesc"></div>
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-slate-500 bg-slate-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair">
+                                                <div class="text-xs font-mono opacity-70 mb-1 uppercase flex items-center gap-1"><i data-lucide="activity" class="w-3 h-3 text-slate-500"></i> <span data-i18n="firm.margin"></span></div>
+                                                <div class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white leading-none mt-1">$130.4B</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed" data-i18n="firm.marginDesc"></div>
                                             </div>
                                         </div>
                                         <!-- Accelerated Growth Segments -->
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-blue-500 bg-blue-50 dark:bg-[#020806]">
-                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-blue-600 dark:text-blue-400" data-i18n="firm.netw"></div>
-                                                <div class="text-lg font-bold text-slate-900 dark:text-white leading-none mt-1">>$31B</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.netwDesc"></div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-blue-500 bg-blue-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair">
+                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-blue-600 dark:text-blue-400 flex items-center gap-1"><i data-lucide="network" class="w-3 h-3 text-blue-500"></i> <span data-i18n="firm.netw"></span></div>
+                                                <div class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white leading-none mt-1">>$31B</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed" data-i18n="firm.netwDesc"></div>
                                             </div>
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-purple-500 bg-purple-50 dark:bg-[#020806]">
-                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-purple-600 dark:text-purple-400" data-i18n="firm.sov"></div>
-                                                <div class="text-lg font-bold text-slate-900 dark:text-white leading-none mt-1">>$30B</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.sovDesc"></div>
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-purple-500 bg-purple-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair">
+                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-purple-600 dark:text-purple-400 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3 text-purple-500"></i> <span data-i18n="firm.sov"></span></div>
+                                                <div class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white leading-none mt-1">>$30B</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed" data-i18n="firm.sovDesc"></div>
                                             </div>
                                         </div>
                                         <!-- EPS & Inference Shift -->
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-amber-500 bg-amber-50 dark:bg-[#020806]">
-                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-amber-600 dark:text-amber-400" data-i18n="firm.eps"></div>
-                                                <div class="text-lg font-bold text-slate-900 dark:text-white leading-none mt-1">EPS $4.90</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.epsDesc"></div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-amber-500 bg-amber-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair">
+                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-amber-600 dark:text-amber-400 flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3 text-amber-500"></i> <span data-i18n="firm.eps"></span></div>
+                                                <div class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white leading-none mt-1">EPS $4.90</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed" data-i18n="firm.epsDesc"></div>
                                             </div>
-                                            <div class="p-4 rounded-xl flex flex-col justify-center border-l-4 border-l-cyan-500 bg-cyan-50 dark:bg-[#020806]">
-                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-cyan-600 dark:text-cyan-400" data-i18n="firm.inf"></div>
-                                                <div class="text-[15px] sm:text-lg font-bold text-slate-900 dark:text-white leading-none mt-1">Inf > Train</div>
-                                                <div class="text-[9px] opacity-60 uppercase tracking-wider mt-1.5 leading-relaxed" data-i18n="firm.infDesc"></div>
+                                            <div class="p-5 rounded-2xl flex flex-col justify-center border-l-4 border-l-cyan-500 bg-cyan-50 dark:bg-[#020806] shadow-sm hover:-translate-y-1 transition-transform cursor-crosshair relative overflow-hidden">
+                                                <div class="absolute -right-4 -bottom-4 opacity-10"><i data-lucide="cpu" class="w-24 h-24 text-cyan-500"></i></div>
+                                                <div class="text-[10px] font-mono opacity-70 mb-1 uppercase text-cyan-600 dark:text-cyan-400 relative z-10 flex items-center gap-1"><i data-lucide="zap" class="w-3 h-3 text-cyan-500"></i> <span data-i18n="firm.inf"></span></div>
+                                                <div class="text-lg lg:text-xl font-bold text-cyan-600 dark:text-cyan-400 leading-none mt-1 relative z-10 animate-pulse">Inf > Train</div>
+                                                <div class="text-[10px] opacity-70 uppercase tracking-wider mt-2 leading-relaxed relative z-10" data-i18n="firm.infDesc"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Mgmt -->
-                            <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
-                                <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
-                                    <h3 class="font-bold font-mono uppercase tracking-widest mb-6 text-lg text-slate-900 dark:text-white" data-i18n="firm.mgmt"></h3>
-                                    <div class="p-5 rounded-2xl mb-4 border border-dashed bg-slate-50 border-slate-300 dark:bg-[#020806] dark:border-slate-700">
-                                        <div class="flex items-center gap-3 mb-2 font-mono"><div class="px-2 py-1 text-[10px] bg-[#a3e635] text-black font-bold uppercase tracking-widest">CEO_ID</div><span class="text-lg uppercase text-slate-900 dark:text-white">Jensen Huang</span></div>
-                                        <div class="text-[10px] font-mono text-[#a3e635] uppercase tracking-wider opacity-80">&gt; Founders & Executive VP Board</div>
+                            <!-- Mgmt & Outlook (Right 5 cols) -->
+                            <div class="xl:col-span-5 flex flex-col gap-6">
+                                <!-- Mgmt -->
+                                <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20 flex-1">
+                                    <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
+                                        <h3 class="font-bold font-mono uppercase tracking-widest mb-6 text-lg text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="users" class="w-5 h-5 text-blue-500"></i> <span data-i18n="firm.mgmt"></span></h3>
+                                        <div class="p-5 rounded-2xl mb-5 border border-dashed bg-slate-50 border-slate-300 dark:bg-[#020806] dark:border-slate-700 relative overflow-hidden group/ceo cursor-pointer">
+                                            <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none"></div>
+                                            <div class="flex items-center gap-3 mb-2 font-mono"><div class="px-2 py-1 text-[10px] bg-blue-500 text-white font-bold uppercase tracking-widest rounded shadow-[0_0_10px_rgba(59,130,246,0.5)]">CEO_ID</div><span class="text-xl font-black uppercase text-slate-900 dark:text-white tracking-wide group-hover/ceo:text-blue-500 transition-colors">Jensen Huang</span></div>
+                                            <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider opacity-90">&gt; Founder & Visionary Architect</div>
+                                        </div>
+                                        <p class="text-sm opacity-80 leading-relaxed font-medium mb-0" data-i18n="firm.mgmtDesc"></p>
                                     </div>
-                                    <p class="text-sm opacity-80 leading-relaxed font-medium mb-4" data-i18n="firm.mgmtDesc"></p>
-                                    <div class="p-4 rounded-xl border-l-2 border-l-blue-500 bg-blue-50 dark:bg-blue-900/10">
-                                        <h4 class="text-[10px] font-mono text-blue-500 mb-1 uppercase" data-i18n="firm.outlook"></h4>
-                                        <p class="text-xs opacity-80 font-medium leading-relaxed" data-i18n="firm.outlookDesc"></p>
+                                </div>
+                                <!-- Outlook -->
+                                <div class="relative group p-[1px] rounded-3xl transition-all duration-500 hover:shadow-slate-300/50 dark:hover:shadow-[#76b900]/20">
+                                    <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
+                                        <h4 class="font-bold font-mono uppercase tracking-widest mb-4 text-lg text-[#a3e635] flex items-center gap-2"><i data-lucide="eye" class="w-5 h-5"></i> <span data-i18n="firm.outlook"></span></h4>
+                                        <div class="p-5 rounded-xl border border-green-500/20 bg-green-500/5 dark:bg-[#020806] mb-4">
+                                            <div class="text-[10px] font-mono text-green-600 dark:text-[#a3e635] mb-1 uppercase tracking-wider" data-i18n="firm.outlookDesc"></div>
+                                            <div class="text-2xl font-black text-slate-900 dark:text-white">$323.3B - $343.4B</div>
+                                        </div>
+                                        <ul class="space-y-2 text-xs font-medium opacity-80 mt-2">
+                                            <li class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full bg-[#a3e635] mt-1 shrink-0"></div><span data-i18n="firm.pillar1"></span></li>
+                                            <li class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full bg-[#a3e635] mt-1 shrink-0"></div><span data-i18n="firm.pillar2"></span></li>
+                                            <li class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full bg-[#a3e635] mt-1 shrink-0"></div><span data-i18n="firm.pillar3"></span></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -775,11 +841,10 @@
                             </div>
                         </div>
                         
-                        <!-- CTA: NVIDIA Careers Banner (使用 i18n 字典) -->
+                        <!-- CTA: NVIDIA Careers Banner -->
                         <div class="mt-12 relative overflow-hidden rounded-3xl group p-[1px]">
                             <div class="absolute inset-[-50%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#10b981_50%,transparent_100%)] opacity-20"></div>
                             <div class="relative z-10 h-full bg-gradient-to-r from-emerald-950 to-slate-900 rounded-[23px] p-8 md:p-12 border border-emerald-500/30 flex flex-col lg:flex-row gap-10 items-center">
-                                <!-- Left: Job Details -->
                                 <div class="flex-1 space-y-6">
                                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold tracking-widest border border-emerald-500/30">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> <span data-i18n="careers.badge"></span>
@@ -799,21 +864,16 @@
                                         </a>
                                     </div>
                                 </div>
-                                
-                                <!-- Right: KSA Badges -->
                                 <div class="w-full lg:w-5/12 flex flex-col gap-4">
                                     <h4 class="text-emerald-500 font-mono text-xs font-bold uppercase tracking-widest mb-2 border-b border-emerald-500/30 pb-2" data-i18n="careers.ksaTitle"></h4>
-                                    
                                     <div class="bg-black/40 border border-emerald-500/20 p-4 rounded-xl backdrop-blur-sm group/ksa hover:border-emerald-500/50 transition-colors">
                                         <div class="flex items-center gap-2 mb-2 text-emerald-400 font-mono text-[10px] uppercase font-bold tracking-widest"><i data-lucide="brain" class="w-3.5 h-3.5"></i> <span data-i18n="careers.kTitle"></span></div>
                                         <p class="text-xs text-slate-300" data-i18n="careers.kDesc"></p>
                                     </div>
-                                    
                                     <div class="bg-black/40 border border-blue-500/20 p-4 rounded-xl backdrop-blur-sm group/ksa hover:border-blue-500/50 transition-colors">
                                         <div class="flex items-center gap-2 mb-2 text-blue-400 font-mono text-[10px] uppercase font-bold tracking-widest"><i data-lucide="wrench" class="w-3.5 h-3.5"></i> <span data-i18n="careers.sTitle"></span></div>
                                         <p class="text-xs text-slate-300" data-i18n="careers.sDesc"></p>
                                     </div>
-                                    
                                     <div class="bg-black/40 border border-purple-500/20 p-4 rounded-xl backdrop-blur-sm group/ksa hover:border-purple-500/50 transition-colors">
                                         <div class="flex items-center gap-2 mb-2 text-purple-400 font-mono text-[10px] uppercase font-bold tracking-widest"><i data-lucide="zap" class="w-3.5 h-3.5"></i> <span data-i18n="careers.aTitle"></span></div>
                                         <p class="text-xs text-slate-300" data-i18n="careers.aDesc"></p>
@@ -825,13 +885,13 @@
                 </section>
             `;
 
-            // Appendices (包含 3D 懸浮晶片與互動實驗室)
+            // Appendices & Team...
             html += `
                 <section id="appendices" class="scroll-mt-32">
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out">
                         ${createSectionHeading('appx.step', 'appx.title', 'book-open', 'appx.audio')}
                         
-                        <!-- 3D 互動晶片 (精準重製版 Blackwell Ultra) -->
+                        <!-- 3D 互動晶片 -->
                         <div class="relative group p-[1px] rounded-3xl transition-all duration-500 mb-8 border border-[#a3e635]/30">
                             <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-12 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
                                 <div class="absolute top-0 left-0 bg-[#a3e635]/20 text-[#a3e635] font-mono text-[10px] px-3 py-1 font-bold uppercase tracking-widest rounded-br-xl">LAB 1: BLACKWELL ULTRA ARCHITECTURE</div>
@@ -839,91 +899,53 @@
                                     <h3 class="text-xl md:text-2xl font-bold font-mono uppercase tracking-widest text-slate-900 dark:text-white">Interactive 3D Chip Explorer</h3>
                                     <p class="text-sm opacity-60 mt-2 font-mono">Move your cursor over the chip to inspect the architecture.</p>
                                 </div>
-                                
                                 <div class="w-full flex justify-center py-10 perspective-1000">
                                     <div id="interactive-chip" class="relative w-full max-w-[20rem] md:max-w-[24rem] aspect-square rounded-xl transition-transform duration-200 ease-out cursor-crosshair transform-style-3d border-[6px] border-[#a08442] dark:bg-[#111111] shadow-[0_30px_50px_-10px_rgba(184,152,81,0.3)] flex items-center justify-center p-4 md:p-6 bg-[#e5e7eb]">
-                                        
-                                        <!-- 頂部浮動規格面板 -->
                                         <div class="absolute -top-12 md:-top-16 left-0 right-0 flex justify-between transform translate-z-50">
                                            <div class="bg-black/90 border border-[#a3e635]/50 text-[#a3e635] px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-mono font-bold shadow-lg">BLACKWELL ULTRA</div>
                                            <div class="bg-black/90 border border-[#a3e635]/50 text-[#a3e635] px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-mono font-bold shadow-lg flex items-center gap-2"><div class="w-2 h-2 bg-[#a3e635] rounded-full animate-pulse"></div> 208B TRANSISTORS</div>
                                         </div>
-
-                                        <!-- 動態資訊面板 HUD -->
                                         <div id="chip-hud" class="absolute top-0 right-0 m-4 w-40 md:w-48 bg-black/95 border border-[#a3e635]/50 rounded-lg p-3 shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none transform translate-z-50 z-50">
                                             <h4 id="chip-hud-title" class="text-[#a3e635] font-mono text-[10px] md:text-xs font-bold mb-1 border-b border-[#a3e635]/30 pb-1"></h4>
                                             <p id="chip-hud-desc" class="text-white opacity-90 text-[9px] md:text-[11px] leading-relaxed font-sans"></p>
                                         </div>
-
-                                        <!-- 晶片核心區域 -->
                                         <div class="relative w-full h-full flex items-stretch justify-center gap-1 md:gap-2 transform translate-z-30">
-                                            
-                                            <!-- Die 1 Area -->
                                             <div class="flex-1 flex flex-col justify-between gap-1 md:gap-2">
                                                 <div class="flex justify-around gap-1 md:gap-2 h-1/6 relative group/hbm">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-32 md:w-40 p-2 bg-black/95 border border-[#B89851] text-[#B89851] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(184,152,81,0.3)] opacity-0 group-hover/hbm:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipHbm"></span>
-                                                    </div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                 </div>
                                                 <div class="flex-1 bg-gradient-to-br from-green-800 to-green-950 dark:from-[#1a3a2a] dark:to-[#0a1a0a] border-2 border-green-500 dark:border-[#76b900] rounded-md relative flex items-center justify-center group/die shadow-inner" onmouseenter="showChipInfo('die')" onmouseleave="hideChipInfo()">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 md:w-48 p-2 bg-black/95 border border-[#a3e635] text-[#a3e635] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(163,230,53,0.3)] opacity-0 group-hover/die:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipDie"></span>
-                                                    </div>
                                                     <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(118,185,0,0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgba(118,185,0,0.3)_1px,transparent_1px)] bg-[size:8px_8px] md:bg-[size:12px_12px] overflow-hidden rounded-md"></div>
                                                     <span class="text-white/90 font-mono text-xs md:text-base font-bold z-10 group-hover/die:text-[#a3e635] transition-colors tracking-widest relative">DIE 01</span>
                                                 </div>
                                                 <div class="flex justify-around gap-1 md:gap-2 h-1/6 relative group/hbm">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-32 md:w-40 p-2 bg-black/95 border border-[#B89851] text-[#B89851] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(184,152,81,0.3)] opacity-0 group-hover/hbm:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipHbm"></span>
-                                                    </div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                 </div>
                                             </div>
-
-                                            <!-- NV-HBI Bridge -->
                                             <div class="w-6 md:w-10 h-full flex flex-col items-center justify-center relative bg-slate-300 dark:bg-[#1a1a1a] border-x border-[#B89851]/30 hover:bg-yellow-600/20 dark:hover:bg-[#B89851]/20 transition-colors cursor-pointer group/hbi" onmouseenter="showChipInfo('hbi')" onmouseleave="hideChipInfo()">
-                                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 md:w-40 p-2 bg-black/95 border border-[#B89851] text-[#B89851] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(184,152,81,0.3)] opacity-0 group-hover/hbi:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                    <span data-i18n="appx.tooltipHbi"></span>
-                                                </div>
                                                 <div class="absolute inset-y-6 inset-x-0 flex items-center justify-center overflow-hidden">
                                                     <div class="w-full h-full bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#B89851_2px,#B89851_4px)] opacity-50 animate-[scanline_2s_linear_infinite]"></div>
                                                 </div>
                                                 <span class="transform -rotate-90 text-[8px] md:text-[10px] font-mono font-bold text-yellow-700 dark:text-[#B89851] whitespace-nowrap z-10 bg-white/90 dark:bg-[#111]/90 px-1.5 py-0.5 rounded shadow relative">10 TB/s NV-HBI</span>
                                             </div>
-
-                                            <!-- Die 2 Area -->
                                             <div class="flex-1 flex flex-col justify-between gap-1 md:gap-2">
                                                 <div class="flex justify-around gap-1 md:gap-2 h-1/6 relative group/hbm">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-32 md:w-40 p-2 bg-black/95 border border-[#B89851] text-[#B89851] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(184,152,81,0.3)] opacity-0 group-hover/hbm:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipHbm"></span>
-                                                    </div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                 </div>
                                                 <div class="flex-1 bg-gradient-to-br from-green-800 to-green-950 dark:from-[#1a3a2a] dark:to-[#0a1a0a] border-2 border-green-500 dark:border-[#76b900] rounded-md relative flex items-center justify-center group/die shadow-inner" onmouseenter="showChipInfo('die')" onmouseleave="hideChipInfo()">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 md:w-48 p-2 bg-black/95 border border-[#a3e635] text-[#a3e635] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(163,230,53,0.3)] opacity-0 group-hover/die:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipDie"></span>
-                                                    </div>
                                                     <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(118,185,0,0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgba(118,185,0,0.3)_1px,transparent_1px)] bg-[size:8px_8px] md:bg-[size:12px_12px] overflow-hidden rounded-md"></div>
                                                     <span class="text-white/90 font-mono text-xs md:text-base font-bold z-10 group-hover/die:text-[#a3e635] transition-colors tracking-widest relative">DIE 02</span>
                                                 </div>
                                                 <div class="flex justify-around gap-1 md:gap-2 h-1/6 relative group/hbm">
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-32 md:w-40 p-2 bg-black/95 border border-[#B89851] text-[#B89851] text-[8px] md:text-xs leading-relaxed rounded-lg shadow-[0_0_15px_rgba(184,152,81,0.3)] opacity-0 group-hover/hbm:opacity-100 transition-opacity pointer-events-none z-[100] text-center transform translate-z-[60px]">
-                                                        <span data-i18n="appx.tooltipHbm"></span>
-                                                    </div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                     <div class="flex-1 bg-slate-400 dark:bg-[#2a2a2a] border border-slate-500 dark:border-[#B89851]/40 rounded-sm hover:bg-yellow-600/30 dark:hover:bg-[#B89851]/30 transition-colors" onmouseenter="showChipInfo('hbm')" onmouseleave="hideChipInfo()"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <!-- 雷射反光特效 -->
                                         <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-[rgba(255,255,255,0.2)] to-transparent pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300 transform translate-z-50 mix-blend-overlay"></div>
-
-                                        <!-- 底部浮動規格面板 -->
                                         <div class="absolute -bottom-10 md:-bottom-14 left-0 right-0 flex justify-center gap-2 md:gap-4 transform translate-z-50">
                                            <div class="bg-black/90 border border-[#B89851]/50 text-[#B89851] px-2 py-1.5 md:px-3 rounded-lg text-[9px] md:text-xs font-mono font-bold shadow-lg">192GB HBM3e</div>
                                            <div class="bg-black/90 border border-[#B89851]/50 text-[#B89851] px-2 py-1.5 md:px-3 rounded-lg text-[9px] md:text-xs font-mono font-bold shadow-lg">8 TB/s BW</div>
@@ -970,11 +992,9 @@
                                     <h3 class="text-xl font-bold font-mono uppercase tracking-widest mb-2 text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5 text-rose-500"></i> <span data-i18n="appx.lab3Title"></span></h3>
                                     <p class="text-sm opacity-80" data-i18n="appx.lab3Desc"></p>
                                 </div>
-                                
                                 <div class="flex-1 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0f172a]/50 p-6 sm:p-8 shadow-inner relative group/chart">
                                     <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(163,230,53,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(163,230,53,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
                                     <h4 class="font-mono text-xs font-bold text-slate-500 dark:text-slate-400 mb-8 uppercase tracking-widest text-center flex items-center justify-center gap-2"><i data-lucide="pie-chart" class="w-4 h-4"></i> China AI Accelerators Market Share</h4>
-                                    
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 relative z-10">
                                         <!-- 2025E -->
                                         <div class="space-y-6">
@@ -992,13 +1012,6 @@
                                                 <div class="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-purple-500 w-[2%]"></div></div>
                                             </div>
                                         </div>
-                                        
-                                        <!-- VS divider -->
-                                        <div class="hidden sm:flex absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 flex-col items-center h-48">
-                                            <div class="h-full w-px bg-slate-300 dark:bg-slate-700 absolute -z-10"></div>
-                                            <div class="bg-slate-50 dark:bg-[#0f172a] p-2 rounded-full text-slate-300 dark:text-slate-600 font-black italic text-lg border border-slate-200 dark:border-slate-700 absolute top-1/2 -translate-y-1/2">VS</div>
-                                        </div>
-                                        
                                         <!-- 2026E -->
                                         <div class="space-y-6">
                                             <div class="text-center font-bold text-sm mb-4 text-rose-500 animate-pulse">2026E (Shift)</div>
@@ -1031,12 +1044,10 @@
                                     </div>
                                     <button onclick="resetMiniGame()" class="px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all bg-slate-200 dark:bg-[#0f172a] border border-slate-300 dark:border-slate-700 hover:bg-[#06b6d4] hover:text-black hover:border-[#06b6d4] shadow-sm text-slate-700 dark:text-slate-300 transition-colors" data-i18n="appx.gameReset"></button>
                                 </div>
-                                
                                 <div class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-[#020806] rounded-2xl border border-slate-200 dark:border-slate-800">
                                     <div id="game-status-display" class="mb-6 font-mono text-sm font-bold text-rose-500 flex items-center gap-2 tracking-widest bg-rose-500/10 px-4 py-2 rounded-full border border-rose-500/30 transition-all duration-300">
                                         <i data-lucide="x-circle" class="w-4 h-4"></i> <span data-i18n="appx.gameDisconn"></span>
                                     </div>
-                                    
                                     <div id="game-board-container" class="grid grid-cols-4 gap-1 sm:gap-2 p-2 sm:p-4 bg-slate-200 dark:bg-slate-900 rounded-xl shadow-inner border border-slate-300 dark:border-slate-700 touch-none">
                                         <!-- JS Injected Game Cells -->
                                     </div>
@@ -1044,7 +1055,7 @@
                             </div>
                         </div>
 
-                        <!-- Glossary 互動式發光卡片網格 (方案 B) 加上 Gemini API -->
+                        <!-- Glossary 互動式發光卡片網格 -->
                         <div class="grid grid-cols-1 mb-6">
                             <div class="relative z-10 h-full backdrop-blur-xl p-6 md:p-8 rounded-[23px] border bg-white/80 border-slate-200 text-slate-700 dark:bg-gradient-to-b dark:from-[#0f172a]/80 dark:to-[#020806]/90 dark:border-slate-700/80 dark:text-slate-300">
                                 <h3 class="font-bold font-mono uppercase tracking-widest mb-4 flex items-center gap-2 text-slate-900 dark:text-white">
@@ -1052,7 +1063,6 @@
                                     <span data-i18n="glossary.title"></span>
                                 </h3>
                                 <p class="text-xs opacity-70 mb-6 font-mono" data-i18n="glossary.desc"></p>
-                                
                                 <div id="glossary-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                     <!-- Cards injected via JS -->
                                 </div>
@@ -1065,85 +1075,92 @@
                                 <details class="group">
                                     <summary class="font-bold font-mono uppercase tracking-widest mb-0 border-b border-slate-700/50 pb-2 text-slate-900 dark:text-white cursor-pointer flex items-center justify-between outline-none hover:text-[#a3e635] transition-colors">
                                         <div class="flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-[#a3e635]"></i> <span data-i18n="appx.dataSrc"></span></div>
-                                        <div class="flex items-center gap-2"><span class="text-[9px] bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full text-slate-500">13 FILES</span><i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-open:rotate-180"></i></div>
+                                        <div class="flex items-center gap-2"><span class="text-[9px] bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full text-slate-500">17 FILES</span><i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-open:rotate-180"></i></div>
                                     </summary>
                                     <ul class="space-y-4 text-xs font-mono leading-relaxed mt-4 max-h-64 overflow-y-auto scrollbar-hide pr-2">
                                         <li>
                                             <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000038/a2026-annualxreportxwebxfi.pdf" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc1" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc1" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.104.com.tw/job/8nijy?jobsource=company_job" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc2" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc2" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.aminext.blog/post/nvidia-blackwell-distributed-ai-architecture" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc3" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc3" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.nvidia.com/zh-tw/data-center/technologies/blackwell-architecture/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc4" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc4" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://nvidianews.nvidia.com/news/nvidia-and-tsmc-bring-ai-into-fabs-to-advance-semiconductor-design-and-manufacturing" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc5" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc5" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.nvidia.com/en-us/solutions/autonomous-vehicles/partners/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc6" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc6" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.nvidia.com/en-us/data-center/gpu-cloud-computing/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc7" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc7" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors-two-divergent-visions/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc8" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc8" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.nvidia.com/en-us/data-center/technologies/rubin/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc9" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc9" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc10" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc10" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.theverge.com/tech/855412/nvidia-launches-vera-rubin-ai-computing-platform-at-ces-2026" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc11" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc11" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="http://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc12" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc12" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="https://www.cnbc.com/2026/02/25/nvidia-nvda-earnings-report-q4-2026.html" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
-                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> 
-                                                <span data-i18n="appx.dataDesc13" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc13" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2026" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc14" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://investor.nvidia.com/financial-info/financial-reports/default.aspx" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc15" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://s201.q4cdn.com/141608511/files/doc_financials/2026/ar/2026-Annual-Report-Web.pdf" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc16" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.oanda.com/bvi-ft/lab-education/invest_us_stock/company-analysis_nvidia/" target="_blank" class="flex items-start gap-2 hover:text-[#a3e635] transition-colors group/link">
+                                                <i data-lucide="external-link" class="w-3 h-3 shrink-0 text-[#a3e635] mt-1 group-hover/link:animate-ping"></i> <span data-i18n="appx.dataDesc17" class="underline decoration-[#a3e635]/30 group-hover/link:decoration-[#a3e635]"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1165,7 +1182,6 @@
                 </section>
             `;
 
-            // Team
             const teamMembers = [
                 { id: 1, ncnuId: 'NCNU_IBS2', name: 'Tina', videoId: 'xrgIDhJ1hCw', photo: 'https://lh3.googleusercontent.com/d/10tHg3_BwFFy4uklhLY332QuZ50dajrOK', roleKey: 'roleTina' },
                 { id: 2, ncnuId: 'NCNU_IBS2', name: 'Paul', videoId: 'v6myTsnfib8', photo: 'https://lh3.googleusercontent.com/d/1bz3Gm2wLxT_sZlkkKVB5De9G_ooqgFi-', roleKey: 'rolePaul' },
@@ -1175,12 +1191,10 @@
                 { id: 6, ncnuId: 'NCNU_BAITIA1', name: 'Joshua', videoId: 'ZsNmL6w6d8I', photo: 'https://lh3.googleusercontent.com/d/1k07MJpmc_9_WiwcPSCo4eWlKUSh0NNb9', roleKey: 'roleJoshua' }
             ];
             
-            // 這裡保留您要求的邏輯：團隊個人卡片維持原本的樣式 (m.photo)
             html += `
                 <section id="team" class="scroll-mt-32">
                     <div class="reveal-hidden reveal transition-all duration-1000 ease-out">
                         ${createSectionHeading('team.step', 'team.title', 'users', 'team.audio')}
-                        
                         <div class="relative group p-0 rounded-3xl transition-all duration-500 mb-8 border border-blue-500/30 overflow-hidden">
                             <div class="p-6 md:p-8 pl-6 md:pl-8 border-l-4 border-blue-500 relative bg-blue-50 dark:bg-blue-900/10">
                                 <div class="absolute top-0 right-0 p-2 opacity-10"><i data-lucide="network" class="w-24 h-24 text-blue-500"></i></div>
@@ -1188,7 +1202,6 @@
                                 <p class="text-base md:text-lg leading-relaxed font-medium opacity-90 relative z-10" data-i18n="team.collab"></p>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             ${teamMembers.map(m => `
                                 <div onclick="openModal('${m.ncnuId}', '${m.name}', '${m.videoId}')" class="cursor-pointer p-1 rounded-3xl transition-all duration-300 hover:-translate-y-2 relative group overflow-hidden bg-gradient-to-b from-slate-300 to-white hover:shadow-xl dark:from-slate-700 dark:to-[#020806]">
@@ -1214,16 +1227,12 @@
             main.innerHTML = html;
         }
 
-        // === 核心邏輯設定與初始化 ===
-        
         function updateTranslations() {
-            // 更新帶有 data-i18n 屬性的所有元素
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const val = getI18n(el.getAttribute('data-i18n'));
                 if(val) el.innerHTML = val;
             });
             
-            // 更新 Business Model Canvas
             const bmcContainer = document.getElementById('bmc-container');
             if (bmcContainer) {
                 const bmcData = dict[currentLang].bmc;
@@ -1265,24 +1274,16 @@
                 }
             }
 
-            // 更新 Glossary 互動式發光卡片網格 (方案 B)
             const glossaryGrid = document.getElementById('glossary-grid');
             if (glossaryGrid) {
                 glossaryGrid.innerHTML = Object.keys(glossaryData).map(key => `
                     <div class="relative group h-32 md:h-36 perspective-1000">
-                        <!-- 發光雷射邊框底層 -->
                         <div class="absolute inset-0 bg-gradient-to-r from-[#76b900] to-[#00ff9d] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[4px]"></div>
-                        
-                        <!-- 卡片主體 -->
                         <div class="relative h-full w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#020806] overflow-hidden transition-all duration-500 transform-style-3d group-hover:scale-[1.02] cursor-crosshair">
-                            
-                            <!-- 卡片正面 (標題) -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-opacity duration-300 group-hover:opacity-0 z-10">
                                 <i data-lucide="cpu" class="w-6 h-6 mb-2 text-slate-400 dark:text-[#a3e635]/50"></i>
                                 <h4 class="text-xs font-bold font-mono text-center text-slate-800 dark:text-white uppercase tracking-wider">${key}</h4>
                             </div>
-                            
-                            <!-- 卡片背面 (解密定義) -->
                             <div class="absolute inset-0 p-4 bg-white dark:bg-black/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-col justify-start">
                                 <h4 class="text-[10px] text-green-600 dark:text-[#a3e635] font-mono mb-2 uppercase border-b border-green-600/30 dark:border-[#a3e635]/30 pb-1 flex items-center gap-1">
                                     <i data-lucide="unlock" class="w-3 h-3"></i> ${key}
@@ -1294,10 +1295,9 @@
                 `).join('');
             }
 
-            // 確保新注入的 HTML (包含 glossary 網格) 能夠渲染圖示
+            renderFaqAccordion();
             lucide.createIcons();
 
-            // 更新 Sidebar Nav
             const sidebar = document.getElementById('sidebar-nav');
             if(sidebar) {
                 sidebar.innerHTML = '<div class="absolute top-0 left-[-1px] w-[2px] h-10 bg-gradient-to-b from-transparent via-[#a3e635] to-transparent animate-scan-track opacity-50"></div>' + 
@@ -1315,7 +1315,6 @@
                 }).join('');
             }
 
-            // 更新 Mobile Nav
             const mobileNav = document.getElementById('mobile-menu-items');
             if(mobileNav) {
                 mobileNav.innerHTML = SECTIONS.map((sec) => {
@@ -1328,35 +1327,22 @@
                 }).join('');
             }
 
-            // 更新 Mini Game UI 文字
             if (document.getElementById('game-board-container')) {
                 renderMiniGameBoard();
             }
-
-            // Chatbot 特例
-            document.getElementById('chat-input').placeholder = dict[currentLang].chatbot.input;
         }
 
-        // 切換語系
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'zh' : 'en';
             document.getElementById('lang-indicator').innerText = currentLang === 'en' ? 'ZH' : 'EN';
-            
-            // 初始化 Chatbot 歡迎訊息
-            chatMessages = [{ role: 'ai', text: currentLang === 'en' ? "System online. Ask me anything about the Group 1 analysis." : "系統已連線。您可以詢問任何關於第一組報告的細節。" }];
-            renderChatMessages();
-            
             updateTranslations();
         }
 
-        // 切換主題 (Dark/Light)
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            // 因為部分 CSS class 是用 JS 產生的（如 Sidebar Nav 動態顏色），所以重新觸發更新
             updateTranslations(); 
         }
 
-        // 滾動與選單
         function scrollToSection(id) {
             document.getElementById(id)?.scrollIntoView({behavior: 'smooth'});
             document.getElementById('mobile-menu').classList.add('hidden');
@@ -1366,11 +1352,8 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        // 滾動監聽 (Scroll Spy & 進場動畫)
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-            
-            // Scroll Spy
             let newActive = 'home';
             if (scrollY >= 300) {
                 for (const section of SECTIONS) {
@@ -1386,11 +1369,10 @@
             }
             if (newActive !== activeSectionId) {
                 activeSectionId = newActive;
-                updateTranslations(); // 重繪 Sidebar
+                updateTranslations(); 
             }
         });
 
-        // 設定 Observer 給進場動畫使用
         function setupIntersectionObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1405,13 +1387,58 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // Lab Tabs (互動實驗室)
+        function toggleFaqModal() {
+            document.getElementById('faq-window').classList.toggle('hidden');
+        }
+
+        function renderFaqAccordion() {
+            const container = document.getElementById('faq-accordion-container');
+            if(!container) return;
+            
+            let html = '';
+            for(let i=1; i<=8; i++) {
+                const qKey = `faq.q${i}`;
+                const aKey = `faq.a${i}`;
+                const qText = getI18n(qKey);
+                const aText = getI18n(aKey);
+                
+                if(qText && aText) {
+                    html += `
+                        <div class="border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-[#0f172a]/50 overflow-hidden">
+                            <button onclick="toggleFaqItem(${i})" class="w-full flex items-center justify-between p-3 text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
+                                <span class="text-xs font-bold text-slate-800 dark:text-white font-mono">${qText}</span>
+                                <i id="faq-icon-${i}" data-lucide="chevron-down" class="w-4 h-4 text-slate-500 transition-transform duration-300"></i>
+                            </button>
+                            <div id="faq-content-${i}" class="faq-content bg-white dark:bg-[#020806] px-3">
+                                <p class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400 font-medium">${aText}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleFaqItem(index) {
+            for(let i=1; i<=8; i++) {
+                const content = document.getElementById(`faq-content-${i}`);
+                const icon = document.getElementById(`faq-icon-${i}`);
+                if(content && icon) {
+                    if(i === index) {
+                        content.classList.toggle('open');
+                        icon.classList.toggle('rotate-180');
+                    } else {
+                        content.classList.remove('open');
+                        icon.classList.remove('rotate-180');
+                    }
+                }
+            }
+        }
+
         function setLabTab(tab) {
             labTab = tab;
             const btnPre = document.getElementById('btn-pre-ai');
             const btnDc = document.getElementById('btn-datacenter');
-            
-            // 重置按鈕狀態
             [btnPre, btnDc].forEach(b => b.className = "px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all text-slate-500 hover:text-slate-300");
             
             if(tab === 'pre-ai') {
@@ -1429,21 +1456,17 @@
             }
         }
 
-        // === Lab 4: Chip Architect Mini Game (Pipe Puzzle) ===
         let gameBoardData = [];
         let gameIsWon = false;
 
         function initMiniGameData() {
-            // 4x4 遊戲網格配置 (起點在左上角，終點在右下角)
             gameBoardData = [
                 [{t:'start', r:0},    {t:'straight', r:90}, {t:'corner', r:90},  {t:'empty', r:0}],
                 [{t:'corner', r:180}, {t:'corner', r:0},    {t:'corner', r:180}, {t:'straight', r:90}],
                 [{t:'straight', r:0}, {t:'corner', r:270},  {t:'corner', r:90},  {t:'corner', r:180}],
                 [{t:'corner', r:0},   {t:'straight', r:0},  {t:'corner', r:0},   {t:'end', r:0}]
             ];
-            
             gameIsWon = false;
-            // 隨機打亂管線方向
             for(let r=0; r<4; r++) {
                 for(let c=0; c<4; c++) {
                     if (gameBoardData[r][c].t === 'straight' || gameBoardData[r][c].t === 'corner') {
@@ -1454,63 +1477,48 @@
         }
 
         function getPipePorts(type, rot) {
-            let base; // 接口方向: [Top, Right, Bottom, Left]
-            if (type === 'start' || type === 'end') base = [1, 1, 1, 1]; // 終端可以接任何方向
+            let base;
+            if (type === 'start' || type === 'end') base = [1, 1, 1, 1];
             else if (type === 'straight') base = [1, 0, 1, 0];
             else if (type === 'corner') base = [1, 1, 0, 0];
             else base = [0, 0, 0, 0];
-
             let shifts = (rot / 90) % 4;
             let res = [...base];
-            for (let i = 0; i < shifts; i++) {
-                res.unshift(res.pop());
-            }
+            for (let i = 0; i < shifts; i++) res.unshift(res.pop());
             return res;
         }
 
         function checkGameConnection() {
             let visited = new Set();
-            let queue = [[0, 0]]; // 從 GPU 起點 (0,0) 開始探索
+            let queue = [[0, 0]];
             let connectedNodes = new Set();
             connectedNodes.add("0,0");
             let isConnectedToEnd = false;
-
             while (queue.length > 0) {
                 let [r, c] = queue.shift();
                 let key = `${r},${c}`;
-                
                 if (visited.has(key)) continue;
                 visited.add(key);
                 connectedNodes.add(key);
-
-                if (gameBoardData[r][c].t === 'end') {
-                    isConnectedToEnd = true;
-                }
-
+                if (gameBoardData[r][c].t === 'end') isConnectedToEnd = true;
                 let ports = getPipePorts(gameBoardData[r][c].t, gameBoardData[r][c].r);
-
-                // 檢查上方 (Top)
                 if (ports[0] && r > 0) {
                     let np = getPipePorts(gameBoardData[r-1][c].t, gameBoardData[r-1][c].r);
-                    if (np[2] && !visited.has(`${r-1},${c}`)) queue.push([r-1, c]); // 上面的方塊下方有接口
+                    if (np[2] && !visited.has(`${r-1},${c}`)) queue.push([r-1, c]);
                 }
-                // 檢查右方 (Right)
                 if (ports[1] && c < 3) {
                     let np = getPipePorts(gameBoardData[r][c+1].t, gameBoardData[r][c+1].r);
-                    if (np[3] && !visited.has(`${r},${c+1}`)) queue.push([r, c+1]); // 右邊的方塊左方有接口
+                    if (np[3] && !visited.has(`${r},${c+1}`)) queue.push([r, c+1]);
                 }
-                // 檢查下方 (Bottom)
                 if (ports[2] && r < 3) {
                     let np = getPipePorts(gameBoardData[r+1][c].t, gameBoardData[r+1][c].r);
-                    if (np[0] && !visited.has(`${r+1},${c}`)) queue.push([r+1, c]); // 下面的方塊上方有接口
+                    if (np[0] && !visited.has(`${r+1},${c}`)) queue.push([r+1, c]);
                 }
-                // 檢查左方 (Left)
                 if (ports[3] && c > 0) {
                     let np = getPipePorts(gameBoardData[r][c-1].t, gameBoardData[r][c-1].r);
-                    if (np[1] && !visited.has(`${r},${c-1}`)) queue.push([r, c-1]); // 左邊的方塊右方有接口
+                    if (np[1] && !visited.has(`${r},${c-1}`)) queue.push([r, c-1]);
                 }
             }
-
             return { connectedNodes, isConnectedToEnd };
         }
 
@@ -1518,30 +1526,18 @@
             const color = isPowered ? '#a3e635' : '#475569';
             const shadow = isPowered ? 'drop-shadow(0px 0px 4px rgba(163,230,53,0.8))' : 'none';
             const strokeW = "14";
-            
-            if (type === 'start') {
-                return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8" style="filter:${shadow}"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`;
-            }
-            if (type === 'end') {
-                return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8" style="filter:${shadow}"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`;
-            }
-            if (type === 'straight') {
-                return `<svg viewBox="0 0 100 100" class="w-full h-full" style="filter:${shadow}"><line x1="50" y1="0" x2="50" y2="100" stroke="${color}" stroke-width="${strokeW}" stroke-linecap="square"/></svg>`;
-            }
-            if (type === 'corner') {
-                return `<svg viewBox="0 0 100 100" class="w-full h-full" style="filter:${shadow}"><polyline points="50,0 50,50 100,50" fill="none" stroke="${color}" stroke-width="${strokeW}" stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
-            }
+            if (type === 'start') return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8" style="filter:${shadow}"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`;
+            if (type === 'end') return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8" style="filter:${shadow}"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`;
+            if (type === 'straight') return `<svg viewBox="0 0 100 100" class="w-full h-full" style="filter:${shadow}"><line x1="50" y1="0" x2="50" y2="100" stroke="${color}" stroke-width="${strokeW}" stroke-linecap="square"/></svg>`;
+            if (type === 'corner') return `<svg viewBox="0 0 100 100" class="w-full h-full" style="filter:${shadow}"><polyline points="50,0 50,50 100,50" fill="none" stroke="${color}" stroke-width="${strokeW}" stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
             return '';
         }
 
         function renderMiniGameBoard() {
             const container = document.getElementById('game-board-container');
             if (!container) return;
-            
             const { connectedNodes, isConnectedToEnd } = checkGameConnection();
             gameIsWon = isConnectedToEnd;
-            
-            // 更新狀態指示器 UI
             const statusDiv = document.getElementById('game-status-display');
             if (gameIsWon) {
                 statusDiv.className = "mb-6 font-mono text-sm font-bold text-[#a3e635] flex items-center gap-2 tracking-widest bg-[#a3e635]/10 px-4 py-2 rounded-full border border-[#a3e635]/30 shadow-[0_0_15px_rgba(163,230,53,0.2)] transition-all duration-300 scale-105";
@@ -1551,27 +1547,16 @@
                 statusDiv.innerHTML = `<i data-lucide="x-circle" class="w-4 h-4"></i> <span>${getI18n('appx.gameDisconn')}</span>`;
             }
             lucide.createIcons({root: statusDiv});
-
             let html = '';
             for (let r = 0; r < 4; r++) {
                 for (let c = 0; c < 4; c++) {
                     let cell = gameBoardData[r][c];
                     let isPowered = connectedNodes.has(`${r},${c}`);
-                    
-                    if (cell.t === 'empty') {
-                        html += `<div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-300/50 dark:bg-[#111] rounded-lg"></div>`;
-                    } else {
+                    if (cell.t === 'empty') html += `<div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-300/50 dark:bg-[#111] rounded-lg"></div>`;
+                    else {
                         const canRotate = (cell.t === 'straight' || cell.t === 'corner') && !gameIsWon;
                         const cursorClass = canRotate ? 'cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-800' : '';
-                        
-                        html += `
-                            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm flex items-center justify-center transition-all duration-300 ${cursorClass}" 
-                                 onclick="${canRotate ? `handlePipeClick(${r},${c})` : ''}">
-                                <div class="w-full h-full p-2 sm:p-3 transition-transform duration-300" style="transform: rotate(${cell.r}deg);">
-                                    ${getPipeSVG(cell.t, isPowered)}
-                                </div>
-                            </div>
-                        `;
+                        html += `<div class="w-12 h-12 sm:w-16 sm:h-16 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm flex items-center justify-center transition-all duration-300 ${cursorClass}" onclick="${canRotate ? `handlePipeClick(${r},${c})` : ''}"><div class="w-full h-full p-2 sm:p-3 transition-transform duration-300" style="transform: rotate(${cell.r}deg);">${getPipeSVG(cell.t, isPowered)}</div></div>`;
                     }
                 }
             }
@@ -1589,7 +1574,6 @@
             renderMiniGameBoard();
         }
 
-        // 3D 互動晶片特效
         function setup3DChip() {
             const chip = document.getElementById('interactive-chip');
             if(!chip) return;
@@ -1608,7 +1592,6 @@
             });
         }
 
-        // HUD 顯示控制 (3D 互動晶片懸浮說明)
         function showChipInfo(type) {
             const hud = document.getElementById('chip-hud');
             const title = document.getElementById('chip-hud-title');
@@ -1618,7 +1601,6 @@
                 if(type === 'die') { titleKey = 'appx.tooltipDieTitle'; descKey = 'appx.tooltipDie'; }
                 else if(type === 'hbi') { titleKey = 'appx.tooltipHbiTitle'; descKey = 'appx.tooltipHbi'; }
                 else if(type === 'hbm') { titleKey = 'appx.tooltipHbmTitle'; descKey = 'appx.tooltipHbm'; }
-                
                 title.innerText = getI18n(titleKey);
                 desc.innerText = getI18n(descKey);
                 hud.style.opacity = '1';
@@ -1629,27 +1611,18 @@
             if(hud) hud.style.opacity = '0';
         }
 
-        // 語音播放 (Speech Synthesis)
         function playAudio(key) {
             if (!window.speechSynthesis) return alert("Browser does not support audio.");
             window.speechSynthesis.cancel();
-            
             let textToRead = getI18n(key);
             if (!textToRead) return;
-
             const utterance = new SpeechSynthesisUtterance(textToRead);
             const voices = window.speechSynthesis.getVoices();
-            
-            if (currentLang === 'en') {
-                utterance.voice = voices.find(v => v.lang.includes('en-GB') && v.name.includes('Male')) || voices.find(v => v.lang.includes('en-GB'));
-            } else {
-                utterance.voice = voices.find(v => v.name.includes('Yating') || v.lang === 'zh-TW') || voices.find(v => v.lang.includes('zh'));
-            }
-            
+            if (currentLang === 'en') utterance.voice = voices.find(v => v.lang.includes('en-GB') && v.name.includes('Male')) || voices.find(v => v.lang.includes('en-GB'));
+            else utterance.voice = voices.find(v => v.name.includes('Yating') || v.lang === 'zh-TW') || voices.find(v => v.lang.includes('zh'));
             document.getElementById('stop-audio-btn').classList.remove('hidden');
             utterance.onend = () => document.getElementById('stop-audio-btn').classList.add('hidden');
             utterance.onerror = () => document.getElementById('stop-audio-btn').classList.add('hidden');
-            
             window.speechSynthesis.speak(utterance);
         }
 
@@ -1658,101 +1631,38 @@
             document.getElementById('stop-audio-btn').classList.add('hidden');
         }
 
-        // 聊天機器人 (Chatbot)
-        function toggleChat() {
-            document.getElementById('chat-window').classList.toggle('hidden');
-        }
-
-        function renderChatMessages() {
-            const body = document.getElementById('chat-body');
-            body.innerHTML = chatMessages.map(msg => {
-                const isAi = msg.role === 'ai';
-                const baseClass = "max-w-[85%] rounded-xl p-3";
-                const colorClass = isAi 
-                    ? "bg-slate-100 text-slate-700 self-start dark:bg-slate-800 dark:text-slate-200" 
-                    : "bg-green-600 text-white self-end dark:bg-[#a3e635]/20 dark:text-[#a3e635] dark:border dark:border-[#a3e635]/50";
-                return `<div class="${baseClass} ${colorClass}">${msg.text}</div>`;
-            }).join('');
-            body.scrollTop = body.scrollHeight; // Scroll to bottom
-        }
-
-        function sendChatMessage(text) {
-            if (!text.trim()) return;
-            
-            chatMessages.push({ role: 'user', text: text });
-            document.getElementById('chat-input').value = '';
-            renderChatMessages();
-
-            // 模擬 AI 思考延遲
-            setTimeout(() => {
-                let response = currentLang === 'en' ? "According to our analysis, NVIDIA's primary strength lies in its CUDA ecosystem, creating a deep moat." : "根據第一組的分析，NVIDIA 的核心競爭力在於其軟硬體全端最佳化能力（尤其是 CUDA），創造了極高的轉換成本與 85%-95% 的市佔率護城河。";
-                
-                if (text.includes('風險') || text.includes('Risk') || text.includes('risk')) {
-                    response = currentLang === 'en' ? "The main risks include US-China geopolitical export controls and the heavy reliance on TSMC for 3nm/2nm manufacturing nodes." : "目前最大的風險為「美中地緣政治與出口管制」，這迫使 NVIDIA 重新設計合規晶片。此外，過度集中於台積電 (TSMC) 的供應鏈也是單點故障隱憂。";
-                } else if (text.includes('展望') || text.includes('Future') || text.includes('future')) {
-                    response = currentLang === 'en' ? "Future outlook is strong. Projected FY2027 revenue is $323.3B-$343.4B with margins over 75%, driven by the upcoming Vera Rubin architecture." : "2027財年預估營收將達 3,233億至3,434億美元，毛利率維持 75% 以上。並預計於 2026 下半年推出新一代「Vera Rubin」架構，有望進一步降低 AI 推論成本。";
-                }
-
-                chatMessages.push({ role: 'ai', text: response });
-                renderChatMessages();
-            }, 800);
-        }
-
-        // Modal 控制
         let currentModalVideoId = '';
-
         function openModal(ncnuId, name, videoId) {
             document.getElementById('modal-id').innerText = ncnuId;
             document.getElementById('modal-agent').innerText = name;
-            
-            // 儲存當前要播放的影片 ID，供後續點擊封面時使用
             currentModalVideoId = videoId;
-            
-            // 設定 Modal 封面圖
             const coverImage = document.getElementById('modal-cover-image');
             coverImage.src = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
-            
-            // 重置 iframe 狀態 (隱藏)
             document.getElementById('modal-iframe-wrapper').classList.add('hidden');
             document.getElementById('modal-iframe').src = '';
-            
             document.getElementById('member-modal').classList.remove('hidden');
         }
-
-        // 當使用者點擊 Modal 的封面圖時，另開分頁跳轉至 YouTube 影片
         function playModalVideo() {
             if (!currentModalVideoId) return;
             window.open('https://www.youtube.com/watch?v=' + currentModalVideoId, '_blank');
         }
-
         function closeModal() {
             document.getElementById('member-modal').classList.add('hidden');
-            // 停止播放：清空 iframe src 並隱藏
             document.getElementById('modal-iframe').src = '';
             document.getElementById('modal-iframe-wrapper').classList.add('hidden');
             currentModalVideoId = '';
         }
 
-        // === 網頁加載完畢初始化 ===
         document.addEventListener('DOMContentLoaded', () => {
-            // 0. 初始化小遊戲
             initMiniGameData();
-            // 1. 動態生成主體架構
             renderContent();
-            // 2. 初始化 Lucide Icons
             lucide.createIcons();
-            // 3. 注入語系文字
-            toggleLanguage(); // 先切換一次確保雙向綁定觸發
-            toggleLanguage(); // 切回預設 'en'
-            // 4. 設定觀察者動畫
+            toggleLanguage(); 
+            toggleLanguage(); 
             setupIntersectionObserver();
-            // 5. 設定 3D 晶片
             setup3DChip();
-            
-            // 處理 Speech Synthesis 在某些瀏覽器需等待載入的 bug
             window.speechSynthesis.onvoiceschanged = () => {};
         });
-
     </script>
 </body>
 </html>
